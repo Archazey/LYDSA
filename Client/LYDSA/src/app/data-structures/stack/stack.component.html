@@ -1,0 +1,18 @@
+<input [(ngModel)]="stepText">
+
+<div class="container-fluid">
+  <div class="top-panel row">
+    <div class="col-md-6 border-right">
+      editor
+    </div>
+
+    <div class="col-md-6">
+      vizualization
+    </div>
+  </div>
+</div>
+
+<div class="border scrollable bottom-step-panel">
+  <app-breakpoint-step-panel [stepText]="stepText">
+  </app-breakpoint-step-panel>
+</div>
