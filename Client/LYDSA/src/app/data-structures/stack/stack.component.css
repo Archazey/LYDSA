@@ -1,13 +1,3 @@
-div.scrollable {
-    overflow-y: auto;
-}
-
-div.bottom-step-panel {
-    height: calc(20 * (100vh - 56px) / 100);
-    background-color: #FFEBC7;
-    color: #463E2E;
-}
-
 div.top-panel {
     height: calc(80 * (100vh - 56px) / 100);
 }

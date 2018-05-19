@@ -2,3 +2,13 @@ p {
     font-size: 1em;
     margin: 0;
 }
+
+div.scrollable {
+    overflow-y: auto;
+}
+
+div.bottom-step-panel {
+    height: calc(20 * (100vh - 56px) / 100);
+    background-color: #F7F4E4;
+    color: #463E2E;
+}

@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 
 @Component({
   selector: 'app-breakpoint-step-panel',
   templateUrl: './breakpoint-step-panel.component.html',
   styleUrls: ['./breakpoint-step-panel.component.css']
 })
-export class BreakpointStepPanelComponent implements OnInit, OnChanges {
+export class BreakpointStepPanelComponent implements OnInit, OnChanges, AfterViewChecked {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   @Input() stepText: string;
   steps: string[] = [];
 
@@ -13,7 +14,7 @@ export class BreakpointStepPanelComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.stepText);
+    this.scrollToBottom();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -27,6 +28,16 @@ export class BreakpointStepPanelComponent implements OnInit, OnChanges {
 
   public clearSteps(): void {
     this.steps = [];
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+  
+  private scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
 }

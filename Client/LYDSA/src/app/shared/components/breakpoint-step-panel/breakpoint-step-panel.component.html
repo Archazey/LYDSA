@@ -1,3 +1,5 @@
-<p *ngFor="let step of steps">
-  <i class="fa fa-chevron-right"></i>&nbsp;{{ step }}
-</p>
+<div #scrollMe class="border scrollable bottom-step-panel">
+  <p *ngFor="let step of steps">
+    <i class="fa fa-chevron-right"></i>&nbsp;{{ step }}
+  </p>
+</div>
