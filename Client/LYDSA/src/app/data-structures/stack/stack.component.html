@@ -1,12 +1,18 @@
-<input [(ngModel)]="stepText">
-
 <div class="container-fluid">
   <div class="top-panel row">
-    <div class="col-md-6 border-right">
-      editor
+    <div class="col-md-6 border-right p-2">
+      <tabset>
+        <tab heading="Editor" id="editor">
+          <app-visualization-editor [inputCode]="inputCode" [disableBreakpoints]="false">
+        </app-visualization-editor>
+        </tab>
+        <tab heading="Input">
+          <textarea class="max border">{{ inputMessage }}</textarea>
+        </tab>
+      </tabset>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 p-2">
       vizualization
     </div>
   </div>

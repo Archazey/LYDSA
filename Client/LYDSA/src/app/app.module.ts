@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 // ngx-boostrap
-import { AlertModule } from 'ngx-bootstrap';
+import { AlertModule, TabsModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -12,6 +12,7 @@ import { TreeViewComponent } from './shared/components/tree-view/tree-view.compo
 import { StackComponent } from './data-structures/stack/stack.component';
 import { FunctionStepperEditorComponent } from './shared/components/function-stepper-editor/function-stepper-editor.component';
 import { BreakpointStepPanelComponent } from './shared/components/breakpoint-step-panel/breakpoint-step-panel.component';
+import { VisualizationEditorComponent } from './shared/components/visualization-editor/visualization-editor.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,10 +28,12 @@ const appRoutes: Routes = [
     TreeViewComponent,
     StackComponent,
     FunctionStepperEditorComponent,
-    BreakpointStepPanelComponent
+    BreakpointStepPanelComponent,
+    VisualizationEditorComponent
   ],
   imports: [
     AlertModule.forRoot(),
+    TabsModule.forRoot(),
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes)

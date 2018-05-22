@@ -1,0 +1,44 @@
+<div class="container-fluid border-bottom">
+  <div class="row">
+    <div class="col-md-2 border-left border-right">
+      <div class="row">
+        <p class="text-center width-max">Breakpoints</p>
+      </div>
+    </div>
+
+    <div class="col-md-8 border-right">
+      <div class="row">
+        <p class="text-center width-max">Code</p>
+      </div>
+    </div>
+
+    <div class="col-md-2 border-right">
+      <div class="row">
+        <p class="text-center width-max">Comments</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngFor="let line of inputCode; let i=index;">
+    <div class="col-md-2 border-left border-right">
+      <div class="row d-flex justify-content-center">
+        <div class="custom-control custom-checkbox mr-sm-2">
+          <input type="checkbox" class="custom-control-input" id="{{ i }}">
+          <label class="custom-control-label" for="{{ i }}"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 border-right">
+      <div class="row">
+        <pre>{{ line }}</pre>
+      </div>
+    </div>
+
+    <div class="col-md-2 border-right">
+      <div class="row p-1">
+        <input class="width-max comment-height" type="text"/>
+      </div>
+    </div>
+  </div>
+</div>

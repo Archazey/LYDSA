@@ -1,3 +1,11 @@
 div.top-panel {
     height: calc(80 * (100vh - 56px) / 100);
 }
+
+textarea.max {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    padding: 0px;
+    height: 200px;
+}

@@ -1,0 +1,19 @@
+p.width-max {
+    width: 100%;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+pre {
+    margin-bottom: 0px;
+}
+
+input.width-max {
+    width: 100%;
+}
+
+input.comment-height {
+    height: 1.2em;
+}
