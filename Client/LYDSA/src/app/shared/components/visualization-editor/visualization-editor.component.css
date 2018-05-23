@@ -17,3 +17,7 @@ input.width-max {
 input.comment-height {
     height: 1.2em;
 }
+
+div.highlight-breakpoint {
+    background-color: #F7F4E4;
+}

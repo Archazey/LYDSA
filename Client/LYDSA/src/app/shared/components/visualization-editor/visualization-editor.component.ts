@@ -10,6 +10,7 @@ import { EditorInput } from '../../models/editor-input';
 export class VisualizationEditorComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() disableBreakpoints: boolean;
   @Input() input: EditorInput[];
+  @Input() highlightedLine?: number;
 
   constructor() {
   }
@@ -18,24 +19,9 @@ export class VisualizationEditorComponent implements OnInit, OnChanges, AfterVie
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    for (let propName in changes) {
-      let chng = changes[propName];
-
-      if (propName == "disableBreakpoints")
-        this.setDisabled(this.disableBreakpoints);
-    }
-  }
-
-  setDisabled(disabled: boolean) {
-    for (var i = 0; i < this.input.length; i++)
-      if (disabled == true)
-        $(`#${i}`).attr('disabled', true);
-      else
-        $(`#${i}`).removeAttr('disabled');
   }
 
   ngAfterViewInit() {
-    this.setDisabled(this.disableBreakpoints);
   }
 
   getEditorData(): EditorInput[] {
