@@ -9,3 +9,8 @@ textarea.max {
     padding: 0px;
     height: 200px;
 }
+
+div.absolute-top-right {
+    top: 0px;
+    right: 0px;
+}

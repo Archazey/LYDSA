@@ -19,11 +19,11 @@
     </div>
   </div>
 
-  <div class="row" *ngFor="let line of inputCode; let i=index;">
+  <div class="row" *ngFor="let line of input; let i=index;">
     <div class="col-md-2 border-left border-right">
       <div class="row d-flex justify-content-center">
         <div class="custom-control custom-checkbox mr-sm-2">
-          <input type="checkbox" class="custom-control-input" id="{{ i }}">
+          <input type="checkbox" class="custom-control-input" id="{{ i }}" [(ngModel)]="line.checked">
           <label class="custom-control-label" for="{{ i }}"></label>
         </div>
       </div>
@@ -31,13 +31,13 @@
 
     <div class="col-md-8 border-right">
       <div class="row">
-        <pre>{{ line }}</pre>
+        <pre>{{ line.codeLine }}</pre>
       </div>
     </div>
 
     <div class="col-md-2 border-right">
       <div class="row p-1">
-        <input class="width-max comment-height" type="text"/>
+        <input class="width-max comment-height" type="text" [(ngModel)]="line.comment"/>
       </div>
     </div>
   </div>

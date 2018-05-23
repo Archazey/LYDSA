@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, SimpleChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, AfterViewInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import * as $ from 'jquery';
+import { EditorInput } from '../../models/editor-input';
 
 @Component({
   selector: 'app-visualization-editor',
   templateUrl: './visualization-editor.component.html',
   styleUrls: ['./visualization-editor.component.css']
 })
-export class VisualizationEditorComponent implements OnInit, AfterViewInit {
+export class VisualizationEditorComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() disableBreakpoints: boolean;
-  @Input() inputCode: string[];
+  @Input() input: EditorInput[];
 
   constructor() {
   }
@@ -16,17 +17,17 @@ export class VisualizationEditorComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
-  ngOnChanes(changes: SimpleChanges) {
-    //TODO: when disableBreakpoints changes, call setDisabled
+  ngOnChanges(changes: SimpleChanges) {
     for (let propName in changes) {
       let chng = changes[propName];
 
-      console.log(chng);
+      if (propName == "disableBreakpoints")
+        this.setDisabled(this.disableBreakpoints);
     }
   }
 
   setDisabled(disabled: boolean) {
-    for (var i = 0; i < this.inputCode.length; i++)
+    for (var i = 0; i < this.input.length; i++)
       if (disabled == true)
         $(`#${i}`).attr('disabled', true);
       else
@@ -35,5 +36,9 @@ export class VisualizationEditorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.setDisabled(this.disableBreakpoints);
+  }
+
+  getEditorData(): EditorInput[] {
+    return this.input;
   }
 }
