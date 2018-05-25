@@ -22,7 +22,7 @@ export class StackCodeRunner {
             StackCodeRunner.logLine(new StackRunResult(2, StackOperation.None));
             if (item.operation == 'Push') {
                 stack.push(item.data);
-                StackCodeRunner.logLine(new StackRunResult(3, StackOperation.Push));
+                StackCodeRunner.logLine(new StackRunResult(3, StackOperation.Push, item.data));
             }
 
             StackCodeRunner.logLine(new StackRunResult(4, StackOperation.None));

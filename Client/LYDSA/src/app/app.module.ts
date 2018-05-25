@@ -13,6 +13,8 @@ import { StackComponent } from './data-structures/stack/stack.component';
 import { FunctionStepperEditorComponent } from './shared/components/function-stepper-editor/function-stepper-editor.component';
 import { BreakpointStepPanelComponent } from './shared/components/breakpoint-step-panel/breakpoint-step-panel.component';
 import { VisualizationEditorComponent } from './shared/components/visualization-editor/visualization-editor.component';
+import { StackVisualizerComponent } from './visualizations/stack-visualizer/stack-visualizer.component';
+import { ReversePipe } from './shared/pipes/reverse-pipe.pipe';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,7 +31,9 @@ const appRoutes: Routes = [
     StackComponent,
     FunctionStepperEditorComponent,
     BreakpointStepPanelComponent,
-    VisualizationEditorComponent
+    VisualizationEditorComponent,
+    StackVisualizerComponent,
+    ReversePipe
   ],
   imports: [
     AlertModule.forRoot(),

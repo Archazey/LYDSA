@@ -9,6 +9,7 @@ import { StackInput } from '../../shared/models/stack-input';
 import { StackCodeRunner } from './stackCodeRunner';
 import { StackRunResult } from '../../shared/models/stack-run-result';
 import { StackOperation } from '../../shared/models/stack-operation';
+import { StackVisualizerComponent } from '../../visualizations/stack-visualizer/stack-visualizer.component';
 
 @Component({
   selector: 'app-stack',
@@ -19,18 +20,23 @@ export class StackComponent implements OnInit {
   @ViewChild(VisualizationEditorComponent)
   private editorComponent: VisualizationEditorComponent;
 
+  @ViewChild(StackVisualizerComponent)
+  private stackVisualizer: StackVisualizerComponent;
+
   stepText: string;
   inputData: string;
   editorInput: EditorInput[];
   disableBreakpoints: boolean = false;
   runningState: boolean = false;
-  stepTime: number = 1000;
+  stepTime: number = 300;
   highlightedLine: number = -1;
   stepIntervalId: number;
 
   constructor() {
     this.stepText = 'Logging steps for stack data structure visualization...';
     this.inputData = `Push 3
+Push 4
+Push 5
 Pop`;
     this.editorInput = StackCodeRunner.getCode();
   }
@@ -99,8 +105,12 @@ Pop`;
       vis.push(line.checked);
 
     for (var i = last + 1; i < linesFlow.length; i++)
+    {
+      console.log('Send event for line' + linesFlow[i].line);
+      this.sendEventToVisualizer(linesFlow[i]);
       if (vis[linesFlow[i].line] == true)
         return i;
+    }
 
     return linesFlow.length;
   }
@@ -116,5 +126,9 @@ Pop`;
 
   stopRunningCode(): void {
     clearInterval(this.stepIntervalId);
+  }
+
+  sendEventToVisualizer(codeLine: StackRunResult): void {
+     this.stackVisualizer.doOperation(codeLine);
   }
 }
