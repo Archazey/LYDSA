@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+// child components
 import { VisualizationEditorComponent } from '../../shared/components/visualization-editor/visualization-editor.component';
+
+// models
 import { EditorInput } from '../../shared/models/editor-input';
 import { StackInput } from '../../shared/models/stack-input';
 import { StackCodeRunner } from './stackCodeRunner';
@@ -23,7 +26,7 @@ export class StackComponent implements OnInit {
   runningState: boolean = false;
   stepTime: number = 1000;
   highlightedLine: number = -1;
-  stepIntervalId: NodeJS.Timer;
+  stepIntervalId: number;
 
   constructor() {
     this.stepText = 'Logging steps for stack data structure visualization...';
@@ -44,12 +47,11 @@ Pop`;
       var editorData: EditorInput[] = this.editorComponent.getEditorData();
 
       var last: number = -1;
-      console.log(linesFlow);
-      this.stepIntervalId = setInterval(() => {
+      this.stepIntervalId = window.setInterval(() => {
         var line: number = this.goToNextBreakpoint(editorData, linesFlow, last);
         last = line;
         if (last == linesFlow.length) {
-          clearInterval(this.stepIntervalId);
+          this.clearAllComponents();
           this.disableBreakpoints = !this.disableBreakpoints;
           this.runningState = !this.runningState;
         }
@@ -60,7 +62,7 @@ Pop`;
       }, this.stepTime);
     }
     else {
-      clearInterval(this.stepIntervalId);
+      this.clearAllComponents();
     }
 
     this.disableBreakpoints = !this.disableBreakpoints;
@@ -101,5 +103,18 @@ Pop`;
         return i;
 
     return linesFlow.length;
+  }
+
+  clearAllComponents(): void {
+    this.stopRunningCode();
+    this.clearEditor();
+  }
+
+  clearEditor(): void {
+    this.highlightedLine = -1;
+  }
+
+  stopRunningCode(): void {
+    clearInterval(this.stepIntervalId);
   }
 }

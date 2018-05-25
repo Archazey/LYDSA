@@ -12,3 +12,8 @@ div.bottom-step-panel {
     background-color: #F7F4E4;
     color: #463E2E;
 }
+
+button.absolute-top-right {
+    top: 0px;
+    right: 0px;
+}

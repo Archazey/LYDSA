@@ -32,6 +32,7 @@ export class StackCodeRunner {
             }
 
             StackCodeRunner.logLine(new StackRunResult(6, StackOperation.None));
+            StackCodeRunner.logLine(new StackRunResult(1, StackOperation.None));
         }
     }
 

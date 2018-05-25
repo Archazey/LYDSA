@@ -27,7 +27,7 @@ export class BreakpointStepPanelComponent implements OnInit, OnChanges, AfterVie
   }
 
   public clearSteps(): void {
-    this.steps = [];
+    this.steps = this.steps.slice(0, 1); // trim all except first line of info
   }
 
   ngAfterViewChecked() {
@@ -39,5 +39,4 @@ export class BreakpointStepPanelComponent implements OnInit, OnChanges, AfterVie
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
   }
-
 }
