@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 
 // child components
 import { VisualizationEditorComponent } from '../../shared/components/visualization-editor/visualization-editor.component';
+import { BreakpointStepPanelComponent } from '../../shared/components/breakpoint-step-panel/breakpoint-step-panel.component';
+import { StackVisualizerComponent } from '../../visualizations/stack-visualizer/stack-visualizer.component';
 
 // models
 import { EditorInput } from '../../shared/models/editor-input';
@@ -9,21 +11,22 @@ import { StackInput } from '../../shared/models/stack-input';
 import { StackCodeRunner } from './stackCodeRunner';
 import { StackRunResult } from '../../shared/models/stack-run-result';
 import { StackOperation } from '../../shared/models/stack-operation';
-import { StackVisualizerComponent } from '../../visualizations/stack-visualizer/stack-visualizer.component';
 
 @Component({
   selector: 'app-stack',
   templateUrl: './stack.component.html',
   styleUrls: ['./stack.component.css']
 })
-export class StackComponent implements OnInit {
+export class StackComponent implements OnInit, AfterViewInit {
   @ViewChild(VisualizationEditorComponent)
   private editorComponent: VisualizationEditorComponent;
 
   @ViewChild(StackVisualizerComponent)
   private stackVisualizer: StackVisualizerComponent;
 
-  stepText: string;
+  @ViewChild(BreakpointStepPanelComponent)
+  private logPanel: BreakpointStepPanelComponent;
+
   inputData: string;
   editorInput: EditorInput[];
   disableBreakpoints: boolean = false;
@@ -33,7 +36,6 @@ export class StackComponent implements OnInit {
   stepIntervalId: number;
 
   constructor() {
-    this.stepText = 'Logging steps for stack data structure visualization...';
     this.inputData = `Push 3
 Push 4
 Push 5
@@ -43,6 +45,11 @@ Pop`;
 
   ngOnInit() {
   }
+
+  ngAfterViewInit(): void {
+    this.logPanel.addLine('Logging panel for stack visualizer...')
+  }
+
 
   toggleRunningState(): void {
     if (this.runningState == false) {
@@ -62,7 +69,7 @@ Pop`;
           this.runningState = !this.runningState;
         }
         else {
-          this.stepText = editorData[linesFlow[line].line].comment;
+          this.logPanel.addLine(editorData[linesFlow[line].line].comment);
           this.highlightedLine = linesFlow[line].line;
         }
       }, this.stepTime);
@@ -106,7 +113,6 @@ Pop`;
 
     for (var i = last + 1; i < linesFlow.length; i++)
     {
-      console.log('Send event for line' + linesFlow[i].line);
       this.sendEventToVisualizer(linesFlow[i]);
       if (vis[linesFlow[i].line] == true)
         return i;

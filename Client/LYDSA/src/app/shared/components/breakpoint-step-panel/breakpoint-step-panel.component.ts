@@ -7,7 +7,6 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChi
 })
 export class BreakpointStepPanelComponent implements OnInit, OnChanges, AfterViewChecked {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  @Input() stepText: string;
   steps: string[] = [];
 
   constructor() {
@@ -28,6 +27,10 @@ export class BreakpointStepPanelComponent implements OnInit, OnChanges, AfterVie
 
   public clearSteps(): void {
     this.steps = this.steps.slice(0, 1); // trim all except first line of info
+  }
+
+  public addLine(line: string): void {
+    this.steps.push(line);
   }
 
   ngAfterViewChecked() {
