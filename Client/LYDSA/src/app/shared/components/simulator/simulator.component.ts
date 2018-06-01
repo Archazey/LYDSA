@@ -79,27 +79,11 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   }
 
   runCode(): DsRunResult[] {
-    var codeInput: DsInput[] = this.parseInput(this.inputData);
+    var codeInput: DsInput[] = this.codeRunner.parseInput(this.inputData);
 
     var result = this.codeRunner.runCode(codeInput);
 
     return result;
-  }
-
-  parseInput(input: string): DsInput[] {
-    // split string into lines
-    var lines: string[] = input.split('\n');
-    var res: DsInput[] = [];
-
-    for (var line of lines) {
-      var words: string[] = line.split(' ');
-      var op: string = words[0];
-      var num: number = parseInt(words[1]);
-
-      res.push(new DsInput(op, num));
-    }
-
-    return res;
   }
 
   goToNextBreakpoint(editorData: EditorInput[], linesFlow: DsRunResult[], last: number): number {

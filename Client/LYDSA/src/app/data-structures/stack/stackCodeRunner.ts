@@ -4,7 +4,7 @@ import { EditorInput } from "../../shared/models/editor-input";
 import { StackOperation } from "../../shared/models/stack/stack-operation";
 import { DsCodeRunner } from '../../shared/models/ds-code-runner';
 
-export class StackCodeRunner extends DsCodeRunner {
+export class StackCodeRunner extends DsCodeRunner { 
     data: StackRunResult[];
 
     runCode(input: StackInput[]): StackRunResult[] {
@@ -37,6 +37,22 @@ export class StackCodeRunner extends DsCodeRunner {
         }
     }
 
+    parseInput(input: string): StackInput[] {
+        // split string into lines
+        var lines: string[] = input.split('\n');
+        var res: StackInput[] = [];
+
+        for (var line of lines) {
+            var words: string[] = line.split(' ');
+            var op: string = words[0];
+            var num: number = parseInt(words[1]);
+
+            res.push(new StackInput(op, num));
+        }
+
+        return res;
+    }
+    
     getCode(): EditorInput[] {
         var code: string[] = `var stack: number[] = [];
 for (var item of input) {
@@ -57,7 +73,7 @@ for (var item of input) {
         var result: EditorInput[] = [];
         for (let i in code)
             result.push(new EditorInput(false, code[i], comments[i].trim()))
-        
+
         return result;
     }
 

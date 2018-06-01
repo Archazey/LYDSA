@@ -4,11 +4,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, AfterContentInit} from '@a
 import { SimulatorComponent } from '../../shared/components/simulator/simulator.component';
 
 // models
-import { EditorInput } from '../../shared/models/editor-input';
-import { StackInput } from '../../shared/models/stack/stack-input';
 import { StackCodeRunner } from './stackCodeRunner';
-import { StackRunResult } from '../../shared/models/stack/stack-run-result';
-import { StackOperation } from '../../shared/models/stack/stack-operation';
 
 @Component({
   selector: 'app-stack',

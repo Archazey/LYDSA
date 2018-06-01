@@ -13,6 +13,10 @@ export class DsCodeRunner {
 
     }
 
+    parseInput(input: string): DsInput[] {
+        return [];
+    }
+
     getCode(): EditorInput[] {
         return [];
     }
