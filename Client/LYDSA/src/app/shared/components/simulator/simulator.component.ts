@@ -23,7 +23,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   private editorComponent: VisualizationEditorComponent;
 
   @ViewChild('visualizerComponent')
-  private stackVisualizer: DsVisualizerComponent;
+  private dsVisualizer: DsVisualizerComponent;
 
   @ViewChild(BreakpointStepPanelComponent)
   private logPanel: BreakpointStepPanelComponent;
@@ -121,7 +121,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   }
 
   sendEventToVisualizer(codeLine: DsRunResult): void {
-     this.stackVisualizer.doOperation(codeLine);
+     this.dsVisualizer.doOperation(codeLine);
   }
 
   setInputData(input: string): void {

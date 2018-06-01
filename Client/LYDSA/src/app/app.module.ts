@@ -15,10 +15,13 @@ import { VisualizationEditorComponent } from './shared/components/visualization-
 import { StackVisualizerComponent } from './visualizations/stack-visualizer/stack-visualizer.component';
 import { ReversePipe } from './shared/pipes/reverse-pipe.pipe';
 import { SimulatorComponent } from './shared/components/simulator/simulator.component';
+import { QueueComponent } from './data-structures/queue/queue.component';
+import { QueueVisualizerComponent } from './visualizations/queue-visualizer/queue-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'visualize/stack', component: StackComponent },
+  { path: 'visualize/queue', component: QueueComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -33,7 +36,9 @@ const appRoutes: Routes = [
     VisualizationEditorComponent,
     StackVisualizerComponent,
     ReversePipe,
-    SimulatorComponent
+    SimulatorComponent,
+    QueueComponent,
+    QueueVisualizerComponent
   ],
   imports: [ 
     AlertModule.forRoot(),
