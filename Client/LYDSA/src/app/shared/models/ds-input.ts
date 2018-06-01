@@ -1,4 +1,4 @@
-export class StackInput {
+export class DsInput {
     operation: string;
     data?: number;
 

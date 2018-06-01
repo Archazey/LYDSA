@@ -16,7 +16,7 @@ export class VisualizationEditorComponent implements OnInit, OnChanges, AfterVie
   }
 
   ngOnInit() {
-  }
+  } 
 
   ngOnChanges(changes: SimpleChanges) {
   }

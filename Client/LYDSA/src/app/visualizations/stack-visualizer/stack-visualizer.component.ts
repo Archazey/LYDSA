@@ -1,17 +1,18 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { StackOperation } from '../../shared/models/stack-operation';
-import { StackRunResult } from '../../shared/models/stack-run-result';
+import { StackOperation } from '../../shared/models/stack/stack-operation';
+import { StackRunResult } from '../../shared/models/stack/stack-run-result';
+import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
 
 @Component({
   selector: 'app-stack-visualizer',
   templateUrl: './stack-visualizer.component.html',
   styleUrls: ['./stack-visualizer.component.css']
 })
-export class StackVisualizerComponent implements OnInit{
+export class StackVisualizerComponent extends DsVisualizerComponent{
   stackArray: number[] = [];
 
   constructor() { 
-
+    super();
   }
 
   ngOnInit() {

@@ -30,7 +30,8 @@ export class BreakpointStepPanelComponent implements OnInit, OnChanges, AfterVie
   }
 
   public addLine(line: string): void {
-    this.steps.push(line);
+    if (line.length > 0)
+      this.steps.push(line);
   }
 
   ngAfterViewChecked() {
