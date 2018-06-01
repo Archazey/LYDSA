@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import * as $ from 'jquery';
 
 // child components
 import { VisualizationEditorComponent } from '../visualization-editor/visualization-editor.component';

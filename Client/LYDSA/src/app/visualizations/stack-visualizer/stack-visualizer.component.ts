@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { StackOperation } from '../../shared/models/stack/stack-operation';
 import { StackRunResult } from '../../shared/models/stack/stack-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
@@ -8,7 +8,8 @@ import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
   templateUrl: './stack-visualizer.component.html',
   styleUrls: ['./stack-visualizer.component.css']
 })
-export class StackVisualizerComponent extends DsVisualizerComponent{
+export class StackVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewChecked{
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   stackArray: number[] = [];
 
   constructor() { 
@@ -16,8 +17,8 @@ export class StackVisualizerComponent extends DsVisualizerComponent{
   }
 
   ngOnInit() {
+    this.scrollToBottom();
   }
-
  
   doOperation(operation: StackRunResult): void {
     if (operation.operation == StackOperation.Push)
@@ -29,5 +30,15 @@ export class StackVisualizerComponent extends DsVisualizerComponent{
 
   clearVisualizer(): void {
     this.stackArray = [];
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 }

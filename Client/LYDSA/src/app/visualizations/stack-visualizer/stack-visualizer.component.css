@@ -3,6 +3,23 @@ button.absolute-top-right {
     right: 0px;
 }
 
-.card-width-18 {
-    width: 18rem;
+.card-width-10 {
+    width: 10rem;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+.height-width-max {
+    height: 100%;
+    width: 100%;
+}
+
+.no-margin {
+    margin: 0 0 0 0;
+}
+
+.custom-card {
+    background-color: #ffc100;
 }

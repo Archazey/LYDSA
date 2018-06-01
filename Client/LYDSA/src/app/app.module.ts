@@ -35,7 +35,7 @@ const appRoutes: Routes = [
     ReversePipe,
     SimulatorComponent
   ],
-  imports: [
+  imports: [ 
     AlertModule.forRoot(),
     TabsModule.forRoot(),
     BrowserModule,
