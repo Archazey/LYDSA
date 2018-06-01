@@ -21,3 +21,8 @@ input.comment-height {
 div.highlight-breakpoint {
     background-color: #F7F4E4;
 }
+
+.top-right {
+    top: 0px;
+    right: 0px;
+}

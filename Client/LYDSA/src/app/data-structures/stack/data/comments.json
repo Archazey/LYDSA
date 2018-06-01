@@ -1,0 +1,9 @@
+[
+    "declare stack",
+    "",
+    "if operation is push",
+    "push number to stack",
+    "if operation is pop",
+    "pop item from stack",
+    ""
+]

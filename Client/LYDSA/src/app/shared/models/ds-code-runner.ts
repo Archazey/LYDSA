@@ -17,7 +17,7 @@ export class DsCodeRunner {
         return [];
     }
 
-    getCode(): EditorInput[] {
+    getCode(codeLanguage: string): EditorInput[] {
         return [];
     }
 

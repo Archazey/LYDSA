@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, AfterViewInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import * as $ from 'jquery';
 import { EditorInput } from '../../models/editor-input';
 
@@ -7,7 +7,7 @@ import { EditorInput } from '../../models/editor-input';
   templateUrl: './visualization-editor.component.html',
   styleUrls: ['./visualization-editor.component.css']
 })
-export class VisualizationEditorComponent implements OnInit, OnChanges, AfterViewInit {
+export class VisualizationEditorComponent implements OnInit{
   @Input() disableBreakpoints: boolean;
   @Input() input: EditorInput[];
   @Input() highlightedLine?: number;
@@ -17,12 +17,6 @@ export class VisualizationEditorComponent implements OnInit, OnChanges, AfterVie
 
   ngOnInit() {
   } 
-
-  ngOnChanges(changes: SimpleChanges) {
-  }
-
-  ngAfterViewInit() {
-  }
 
   getEditorData(): EditorInput[] {
     return this.input;

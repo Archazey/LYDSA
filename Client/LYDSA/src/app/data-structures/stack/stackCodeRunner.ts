@@ -4,11 +4,15 @@ import { EditorInput } from "../../shared/models/editor-input";
 import { StackOperation } from "../../shared/models/stack/stack-operation";
 import { DsCodeRunner } from '../../shared/models/ds-code-runner';
 
+// codes
+import * as codes from './data/codes.json';
+import * as comments from './data/comments.json';
+
 export class StackCodeRunner extends DsCodeRunner { 
     data: StackRunResult[];
 
     runCode(input: StackInput[]): StackRunResult[] {
-        this.data = [];
+        this.data = []; 
 
         this.run(input);
 
@@ -53,22 +57,8 @@ export class StackCodeRunner extends DsCodeRunner {
         return res;
     }
     
-    getCode(): EditorInput[] {
-        var code: string[] = `var stack: number[] = [];
-for (var item of input) {
-    if (item.operation == 'Push') 
-        stack.push(item.data);
-    if (item.operation == 'Pop') 
-        stack.pop();
-}`.split('\n');
-
-        var comments: string[] = `declare stack
-        
-        if operation is push
-        push number to stack
-        if operation is pop
-        pop item from stack
-        `.split('\n');
+    getCode(codeLanguage: string): EditorInput[] {
+        var code: string[] = codes[codeLanguage];
 
         var result: EditorInput[] = [];
         for (let i in code)

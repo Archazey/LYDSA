@@ -1,0 +1,20 @@
+{
+    "typescript": [
+        "var stack: number[] = [];",
+        "for (var item of input) {",
+        "    if (item.operation == 'Push')",
+        "        stack.push(item.data);",
+        "    if (item.operation == 'Pop')",
+        "        stack.pop();",
+        "}"
+    ],
+    "java": [
+        "ArrayList stack = new ArrayList();",
+        "for (StackOperation item : input) {",
+        "    if (item.operation == \"Push\")",
+        "        stack.add(item.data);",
+        "    if (item.operation == \"Pop\")",
+        "        stack.remove(stack.size() - 1);",
+        "}"
+    ]
+}
