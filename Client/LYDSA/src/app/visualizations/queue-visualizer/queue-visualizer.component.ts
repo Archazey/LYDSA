@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewChecked } fro
 import { QueueOperation } from '../../shared/models/queue/queue-operation';
 import { QueueRunResult } from '../../shared/models/queue/queue-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
+import { QueueVisualizerData } from '../../shared/models/queue/queue-visualizer-data';
+import * as uniqid from 'uniqid';
 
 @Component({
   selector: 'app-queue-visualizer',
@@ -10,7 +12,7 @@ import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
 })
 export class QueueVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewChecked{
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  queueArray: number[] = [];
+  queueArray: QueueVisualizerData[] = [];
 
   constructor() { 
     super();
@@ -22,14 +24,18 @@ export class QueueVisualizerComponent extends DsVisualizerComponent implements O
  
   doOperation(operation: QueueRunResult): void {
     if (operation.operation == QueueOperation.Push)
-      this.queueArray.push(operation.data);
+      this.pushElement(operation.data);
 
     if (operation.operation == QueueOperation.Pop)
-      this.queueArray.splice(0, 1);
+      this.popElement();
   }
 
   clearVisualizer(): void {
     this.queueArray = [];
+  }
+
+  addAnimationToCard(index: number) {
+
   }
 
   ngAfterViewChecked() {
@@ -40,5 +46,26 @@ export class QueueVisualizerComponent extends DsVisualizerComponent implements O
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
+  }
+
+  pushElement(data: number) {
+    var hashValue = uniqid();
+    this.queueArray.push(new QueueVisualizerData('fadeIn', hashValue, data));
+    setTimeout(() => {
+      var elem = this.queueArray.find((item) => item.hashValue == hashValue);
+      elem.animation = '';
+    }, 1000);
+  }
+
+  popElement() {
+    var hashValue = this.queueArray[0].hashValue;
+    this.queueArray[0].animation = 'fadeOut';
+    setTimeout(() => {  
+      var pos;
+      for (var i in this.queueArray)
+        if (this.queueArray[i].hashValue == hashValue)
+          pos = i;
+      this.queueArray.splice(pos, 1);
+    }, 1000);
   }
 }

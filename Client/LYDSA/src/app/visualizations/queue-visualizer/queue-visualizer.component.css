@@ -23,3 +23,7 @@ button.absolute-top-right {
 .custom-card {
     background-color: #ffc100;
 }
+
+div.card {
+  animation-duration: 1s;
+}
