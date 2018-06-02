@@ -1,0 +1,28 @@
+{
+    "typescript": [
+        "var deque: number[] = [];",
+        "for (var item of input) {",
+        "   if (item.operation == 'PushFront')",
+        "       deque.splice(0, 0, item.data);",
+        "   if (item.operation == 'PushBack') {",
+        "        deque.push(item.data);",
+        "   if (item.operation == 'PopFront') {",
+        "        deque.splice(0, 1);",
+        "    if (item.operation == 'PopBack') {",
+        "        deque.splice(deque.length - 1, 1);",
+        "}"
+    ],
+    "java": [
+        "ArrayList deque = new ArrayList();",
+        "for (DequeOperation item of input) {",
+        "   if (item.operation == 'PushFront')",
+        "       deque.add(0, item.data);",
+        "   if (item.operation == 'PushBack') {",
+        "        deque.add(item.data);",
+        "   if (item.operation == 'PopFront') {",
+        "        deque.remove(0);",
+        "    if (item.operation == 'PopBack') {",
+        "        deque.remove(deque.size() - 1);",
+        "}"
+    ]
+}

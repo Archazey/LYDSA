@@ -3,18 +3,18 @@
         "var queue: number[] = [];",
         "for (var item of input) {",
         "    if (item.operation == 'Push')",
-        "        stack.push(item.data);",
+        "        queue.push(item.data);",
         "    if (item.operation == 'Pop')",
-        "        stack.splice(0, 1);",
+        "        queue.splice(0, 1);",
         "}"
     ],
     "java": [
         "ArrayList queue = new ArrayList();",
-        "for (StackOperation item : input) {",
+        "for (QueueOperation item : input) {",
         "    if (item.operation == \"Push\")",
-        "        stack.add(item.data);",
+        "        queue.add(item.data);",
         "    if (item.operation == \"Pop\")",
-        "        stack.remove(0);",
+        "        queue.remove(0);",
         "}"
     ]
 }

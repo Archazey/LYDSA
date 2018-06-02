@@ -1,0 +1,13 @@
+[
+    "declare deque",
+    "",
+    "if operation is PushFront",
+    "push number to front of deque",
+    "if operation is PushBack",
+    "pop number to end of deque",
+    "if operation is PopFront",
+    "pop number from front of deque",
+    "if operation is PopBack",
+    "pop number from back of deque",
+    ""
+]

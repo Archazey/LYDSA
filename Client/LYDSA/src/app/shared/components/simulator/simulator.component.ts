@@ -36,15 +36,16 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   highlightedLine: number = -1;
   stepIntervalId: number; 
   codeRunner: DsCodeRunner;
-  chosenLanguage: string;
-  codeLanguages: string[];
+  selectedLanguage: string;
+  programmingLanguages: string[];
 
   constructor() {
-    this.codeLanguages = [
+    this.programmingLanguages = [
       "Typescript",
-      "Java"
+      "Java",
+      "Python"
     ];
-    this.chosenLanguage = "Typescript";
+    this.selectedLanguage = "Typescript";
   }
 
   ngOnInit() {
@@ -137,12 +138,10 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   }
 
   setEditorContent(): void {
-    this.editorInput = this.codeRunner.getCode(this.chosenLanguage.toLowerCase());
+    this.editorInput = this.codeRunner.getCode(this.selectedLanguage.toLowerCase());
   }
 
-  changeLanguage(index: number) {
-    console.log(index);
-    this.chosenLanguage = this.codeLanguages[index];
+  changeLanguage() {
     this.setEditorContent();
   }
 }

@@ -17,6 +17,8 @@ import { ReversePipe } from './shared/pipes/reverse-pipe.pipe';
 import { SimulatorComponent } from './shared/components/simulator/simulator.component';
 import { QueueComponent } from './data-structures/queue/queue.component';
 import { QueueVisualizerComponent } from './visualizations/queue-visualizer/queue-visualizer.component';
+import { DequeComponent } from './data-structures/deque/deque.component';
+import { DequeVisualizerComponent } from './visualizations/deque-visualizer/deque-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -38,7 +40,9 @@ const appRoutes: Routes = [
     ReversePipe,
     SimulatorComponent,
     QueueComponent,
-    QueueVisualizerComponent
+    QueueVisualizerComponent,
+    DequeComponent,
+    DequeVisualizerComponent
   ],
   imports: [ 
     AlertModule.forRoot(),

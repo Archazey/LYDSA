@@ -8,7 +8,7 @@ import { DsCodeRunner } from '../../shared/models/ds-code-runner';
 import * as codes from './data/codes.json';
 import * as comments from './data/comments.json';
 
-export class QueueCodeRunner extends DsCodeRunner { 
+export class DequeCodeRunner extends DsCodeRunner { 
     data: QueueRunResult[];
 
     runCode(input: QueueInput[]): QueueRunResult[] {
@@ -20,23 +20,35 @@ export class QueueCodeRunner extends DsCodeRunner {
     }
 
     run(input: QueueInput[]) {
-        var queue: number[] = [];
+        var deque: number[] = [];
         this.logLine(new QueueRunResult(0, QueueOperation.None));
         this.logLine(new QueueRunResult(1, QueueOperation.None));
         for (var item of input) {
             this.logLine(new QueueRunResult(2, QueueOperation.None));
-            if (item.operation == 'Push') {
-                queue.push(item.data);
+            if (item.operation == 'PushFront') {
+                deque.splice(0, 0, item.data);
                 this.logLine(new QueueRunResult(3, QueueOperation.Push, item.data));
             }
 
             this.logLine(new QueueRunResult(4, QueueOperation.None));
-            if (item.operation == 'Pop') {
-                queue.pop();
+            if (item.operation == 'PushBack') {
+                deque.push(item.data);
                 this.logLine(new QueueRunResult(5, QueueOperation.Pop));
             }
 
             this.logLine(new QueueRunResult(6, QueueOperation.None));
+            if (item.operation == 'PopFront') {
+                deque.splice(0, 1);
+                this.logLine(new QueueRunResult(7, QueueOperation.Pop));
+            }
+
+            this.logLine(new QueueRunResult(8, QueueOperation.None));
+            if (item.operation == 'PopBack') {
+                deque.splice(deque.length - 1, 1);
+                this.logLine(new QueueRunResult(9, QueueOperation.Pop));
+            }
+
+            this.logLine(new QueueRunResult(10, QueueOperation.None));
             this.logLine(new QueueRunResult(1, QueueOperation.None));
         }
     }

@@ -1,9 +1,9 @@
 [
-    "declare stack",
+    "declare queue",
     "",
     "if operation is push",
-    "push number to stack",
+    "push number to queue",
     "if operation is pop",
-    "pop item from stack",
+    "pop item from queue",
     ""
 ]
