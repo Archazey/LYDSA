@@ -25,5 +25,9 @@ button.absolute-top-right {
 }
 
 div.card {
-  animation-duration: 1s;
+  animation-duration: 1.2s;
+}
+
+div.red-card {
+    background-color: red;
 }

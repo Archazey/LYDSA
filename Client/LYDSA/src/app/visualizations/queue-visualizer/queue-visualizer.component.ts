@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { QueueOperation } from '../../shared/models/queue/queue-operation';
 import { QueueRunResult } from '../../shared/models/queue/queue-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
@@ -10,7 +10,7 @@ import * as uniqid from 'uniqid';
   templateUrl: './queue-visualizer.component.html',
   styleUrls: ['./queue-visualizer.component.css']
 })
-export class QueueVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewChecked{
+export class QueueVisualizerComponent extends DsVisualizerComponent {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   queueArray: QueueVisualizerData[] = [];
 
@@ -18,10 +18,6 @@ export class QueueVisualizerComponent extends DsVisualizerComponent implements O
     super();
   }
 
-  ngOnInit() {
-    this.scrollToBottom();
-  }
- 
   doOperation(operation: QueueRunResult): void {
     if (operation.operation == QueueOperation.Push)
       this.pushElement(operation.data);
@@ -34,26 +30,13 @@ export class QueueVisualizerComponent extends DsVisualizerComponent implements O
     this.queueArray = [];
   }
 
-  addAnimationToCard(index: number) {
-
-  }
-
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
-  private scrollToBottom(): void {
-    try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
-  }
-
   pushElement(data: number) {
     var hashValue = uniqid();
     this.queueArray.push(new QueueVisualizerData('fadeIn', hashValue, data));
     setTimeout(() => {
       var elem = this.queueArray.find((item) => item.hashValue == hashValue);
-      elem.animation = '';
+      if (elem && elem.animation == 'fadeIn')
+        elem.animation = '';
     }, 1000);
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChi
 import { StackOperation } from '../../shared/models/stack/stack-operation';
 import { StackRunResult } from '../../shared/models/stack/stack-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
+import { StackVisualizerData } from '../../shared/models/stack/stack-visualizer-data';
+import * as uniqid from 'uniqid';
 
 @Component({
   selector: 'app-stack-visualizer',
@@ -10,7 +12,7 @@ import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
 })
 export class StackVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewChecked{
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  stackArray: number[] = [];
+  stackArray: StackVisualizerData[] = [];
 
   constructor() { 
     super();
@@ -22,10 +24,10 @@ export class StackVisualizerComponent extends DsVisualizerComponent implements O
  
   doOperation(operation: StackRunResult): void {
     if (operation.operation == StackOperation.Push)
-      this.stackArray.push(operation.data);
+      this.pushElement(operation.data);
 
     if (operation.operation == StackOperation.Pop)
-      this.stackArray.pop();
+      this.popElement();
   }
 
   clearVisualizer(): void {
@@ -40,5 +42,27 @@ export class StackVisualizerComponent extends DsVisualizerComponent implements O
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
+  }
+
+  pushElement(data: number) {
+    var hashValue = uniqid();
+    this.stackArray.push(new StackVisualizerData('fadeIn', hashValue, data));
+    setTimeout(() => {
+      var elem = this.stackArray.find((item) => item.hashValue == hashValue);
+      if (elem && elem.animation == 'fadeIn')
+        elem.animation = '';
+    }, 1000);
+  }
+
+  popElement() {
+    var hashValue = this.stackArray[this.stackArray.length - 1].hashValue;
+    this.stackArray[this.stackArray.length - 1].animation = 'fadeOut';
+    setTimeout(() => {  
+      var pos;
+      for (var i in this.stackArray)
+        if (this.stackArray[i].hashValue == hashValue)
+          pos = i;
+      this.stackArray.splice(pos, 1);
+    }, 1000);
   }
 }

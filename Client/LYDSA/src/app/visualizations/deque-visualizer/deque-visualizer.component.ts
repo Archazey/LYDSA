@@ -1,50 +1,82 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { DequeOperation } from '../../shared/models/deque/deque-operation';
 import { DequeRunResult } from '../../shared/models/deque/deque-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
+import { DequeVisualizerData } from '../../shared/models/deque/deque-visualizer-data'; 
+import * as uniqid from 'uniqid';
 
 @Component({
   selector: 'app-deque-visualizer',
   templateUrl: './deque-visualizer.component.html',
   styleUrls: ['./deque-visualizer.component.css']
 })
-export class DequeVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewChecked{
+export class DequeVisualizerComponent extends DsVisualizerComponent{
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  dequeArray: number[] = [];
+  dequeArray: DequeVisualizerData[] = [];
 
   constructor() { 
     super();
   }
-
-  ngOnInit() {
-    this.scrollToBottom();
-  }
  
   doOperation(operation: DequeRunResult): void {
     if (operation.operation == DequeOperation.PushFront)
-      this.dequeArray.splice(0, 0, operation.data);
+      this.pushElementToFront(operation.data);
 
     if (operation.operation == DequeOperation.PushBack)
-      this.dequeArray.push(operation.data);
+      this.pushElementToBack(operation.data);
 
     if (operation.operation == DequeOperation.PopFront)
-      this.dequeArray.splice(0, 1);
+      this.popElementFromFront();
 
     if (operation.operation == DequeOperation.PopBack)
-      this.dequeArray.splice(this.dequeArray.length - 1, 1);
+      this.popElementFromBack();
   }
 
   clearVisualizer(): void {
     this.dequeArray = [];
   }
 
-  ngAfterViewChecked() {
-    this.scrollToBottom();
+  pushElementToFront(data: number) {
+    var hashValue = uniqid();
+    this.dequeArray.splice(0, 0, new DequeVisualizerData('fadeIn', hashValue, data));
+    setTimeout(() => {
+      var elem = this.dequeArray.find((item) => item.hashValue == hashValue);
+      if (elem && elem.animation == 'fadeIn')
+        elem.animation = '';
+    }, 1000);
   }
 
-  private scrollToBottom(): void {
-    try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+  pushElementToBack(data: number) {
+    var hashValue = uniqid();
+    this.dequeArray.push(new DequeVisualizerData('fadeIn', hashValue, data));
+    setTimeout(() => {
+      var elem = this.dequeArray.find((item) => item.hashValue == hashValue);
+      if (elem && elem.animation == 'fadeIn')
+        elem.animation = '';
+    }, 1000);
+  }
+
+  popElementFromFront() {
+    var hashValue = this.dequeArray[0].hashValue;
+    this.dequeArray[0].animation = 'fadeOut';
+    setTimeout(() => {  
+      var pos;
+      for (var i in this.dequeArray)
+        if (this.dequeArray[i].hashValue == hashValue)
+          pos = i;
+      this.dequeArray.splice(pos, 1);
+    }, 1000);
+  }
+
+  popElementFromBack() {
+    var hashValue = this.dequeArray[this.dequeArray.length - 1].hashValue;
+    this.dequeArray[this.dequeArray.length - 1].animation = 'fadeOut';
+    setTimeout(() => {  
+      var pos;
+      for (var i in this.dequeArray)
+        if (this.dequeArray[i].hashValue == hashValue)
+          pos = i;
+      this.dequeArray.splice(pos, 1);
+    }, 1000);
   }
 }
