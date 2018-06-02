@@ -24,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'visualize/stack', component: StackComponent },
   { path: 'visualize/queue', component: QueueComponent },
+  { path: 'visualize/deque', component: DequeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
