@@ -11,7 +11,7 @@ import { TreeElement } from '../shared/models/tree-element';
 export class HomeComponent implements OnInit {
   treeViewData: TreeElement[];
 
-  constructor() { 
+  constructor() {
     this.treeViewData = [
       {
         title: 'Data structures',
@@ -68,9 +68,29 @@ export class HomeComponent implements OnInit {
         title: 'Algorithms',
         url: '#',
         show: false,
-        children: []
+        children: [
+          {
+            title: 'Sorting',
+            url: '#',
+            show: false,
+            children: [
+              {
+                title: 'Bubble sort',
+                url: 'visualize/bubble-sort',
+                show: false,
+                children: []
+              },
+              {
+                title: 'Merge sort',
+                url: 'visualize/merge-sort',
+                show: false,
+                children: []
+              }
+            ]
+          }
+        ]
       }
-    ]; 
+    ];
   }
 
   ngOnInit() {

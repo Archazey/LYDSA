@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, AfterContentInit, AfterViewChecked } from '@angular/core';
 
 // child components
 import { VisualizationEditorComponent } from '../visualization-editor/visualization-editor.component';
@@ -16,7 +16,7 @@ import { DsCodeRunner } from '../../models/ds-code-runner';
   templateUrl: './simulator.component.html',
   styleUrls: ['./simulator.component.css']
 })
-export class SimulatorComponent implements OnInit, AfterViewInit {
+export class SimulatorComponent implements OnInit, AfterViewInit{
   @Input() visualizerType: string;
 
   @ViewChild(VisualizationEditorComponent)
@@ -52,10 +52,16 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.dsVisualizer.initVisualizer(this.inputData);
+    }, 10);
   }
 
   toggleRunningState(): void {
     if (this.runningState == false) {
+      // initialize component when needed
+      this.dsVisualizer.initVisualizer(this.inputData);
+
       // run the code on new input
       var linesFlow: DsRunResult[] = this.runCode();
 

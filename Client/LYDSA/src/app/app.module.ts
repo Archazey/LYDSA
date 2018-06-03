@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -19,13 +21,16 @@ import { QueueComponent } from './data-structures/queue/queue.component';
 import { QueueVisualizerComponent } from './visualizations/queue-visualizer/queue-visualizer.component';
 import { DequeComponent } from './data-structures/deque/deque.component';
 import { DequeVisualizerComponent } from './visualizations/deque-visualizer/deque-visualizer.component';
+import { MergeSortComponent } from './algorithms/sorting/merge-sort/merge-sort.component';
+import { MergeSortVisualizerComponent } from './visualizations/sorting/merge-sort-visualizer/merge-sort-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'visualize/stack', component: StackComponent },
   { path: 'visualize/queue', component: QueueComponent },
   { path: 'visualize/deque', component: DequeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full'}
+  { path: 'visualize/merge-sort', component: MergeSortComponent},
+  { path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 
@@ -43,12 +48,15 @@ const appRoutes: Routes = [
     QueueComponent,
     QueueVisualizerComponent,
     DequeComponent,
-    DequeVisualizerComponent
+    DequeVisualizerComponent,
+    MergeSortComponent,
+    MergeSortVisualizerComponent
   ],
   imports: [ 
     AlertModule.forRoot(),
     TabsModule.forRoot(),
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],

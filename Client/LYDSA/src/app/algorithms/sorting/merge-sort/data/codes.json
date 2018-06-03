@@ -1,0 +1,36 @@
+{
+    "typescript": [
+        "mergeSort(st: number, dr: number, arr: MergeSortInput[]) {",
+        "    if (dr - st + 1 <= 1)",
+        "        return;",
+        "    var mij: number = (st + dr) / 2;",
+        "    mergeSort(st, mij, arr);",
+        "    mergeSort(mij + 1, dr, arr);",
+        "    var i = st, j = mij + 1;",
+        "    var aux: MergeSortInput[] = [];",
+        "    while (i <= mij && j <= dr) {",
+        "        if (arr[i] <= arr[j]) {",
+        "            aux.push(arr[i]);",
+        "            i++;",
+        "        }",
+        "        else {",
+        "            aux.push(arr[j]);",
+        "            j++;",
+        "        }",
+        "    }",
+        "    while (i <= mij) {",
+        "        aux.push(arr[i]);",
+        "        i++;",
+        "    }",
+        "    while (j <= dr) {",
+        "        aux.push(arr[j]);",
+        "        j++;",
+        "    }",
+        "    for (var index in aux)", 
+        "        arr[st + index] = aux[index];",
+        "}"
+    ],
+    "java": [
+        
+    ]
+}

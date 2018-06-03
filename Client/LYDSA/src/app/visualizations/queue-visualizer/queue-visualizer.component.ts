@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { QueueOperation } from '../../shared/models/queue/queue-operation';
 import { QueueRunResult } from '../../shared/models/queue/queue-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
@@ -11,7 +11,6 @@ import * as uniqid from 'uniqid';
   styleUrls: ['./queue-visualizer.component.css']
 })
 export class QueueVisualizerComponent extends DsVisualizerComponent {
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   queueArray: QueueVisualizerData[] = [];
 
   constructor() { 

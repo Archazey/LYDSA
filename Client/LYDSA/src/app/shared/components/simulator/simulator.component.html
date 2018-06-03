@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="top-panel row">
-    <div class="col-md-6 border-right p-2">
+    <div class="col-md-6 border-right p-2 scrollable">
 
       <div class="btn-group position-absolute absolute-top-right mt-2 mr-2">
         <select class="custom-select mr-1" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
@@ -27,6 +27,7 @@
       <app-stack-visualizer #visualizerComponent *ngIf="visualizerType == 'app-stack-visualizer'"></app-stack-visualizer>
       <app-queue-visualizer #visualizerComponent *ngIf="visualizerType == 'app-queue-visualizer'"></app-queue-visualizer>
       <app-deque-visualizer #visualizerComponent *ngIf="visualizerType == 'app-deque-visualizer'"></app-deque-visualizer>
+      <app-merge-sort-visualizer #visualizerComponent *ngIf="visualizerType == 'app-merge-sort-visualizer'"></app-merge-sort-visualizer>
     </div>
   </div>
 </div>

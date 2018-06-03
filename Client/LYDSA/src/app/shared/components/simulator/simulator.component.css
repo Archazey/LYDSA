@@ -14,3 +14,7 @@ div.absolute-top-right {
     top: 0px;
     right: 0px;
 }
+
+.scrollable {
+    overflow: auto;
+}

@@ -15,6 +15,10 @@ export class DsVisualizerComponent implements OnInit {
     doOperation(operation: DsRunResult): void {
     }
 
+    initVisualizer(input: string): void {
+        
+    }
+
     clearVisualizer(): void {
     }
 }

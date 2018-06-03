@@ -1,8 +1,14 @@
 <div class="container-fluid border-bottom">
   <div class="row">
     <div class="col-md-2 border-left border-right">
-      <div class="row">
-        <p class="text-center width-max">Breakpoints</p>
+      <div class="row d-flex justify-content-center">
+        <span>
+          Breakpoints
+          <div class="custom-control custom-checkbox mr-sm-2 d-inline-block">
+            <input type="checkbox" class="custom-control-input" id="selectAll" [(ngModel)]="selectAll" (change)="toggleAll()" [disabled]="disableBreakpoints">
+            <label class="custom-control-label" for="selectAll"></label>
+          </div>
+        </span>
       </div>
     </div>
 
@@ -10,7 +16,7 @@
       <div class="row">
         <p class="text-center width-max">Code</p>
       </div>
-    </div>  
+    </div>
 
     <div class="col-md-2 border-right">
       <div class="row">
@@ -37,7 +43,7 @@
 
     <div class="col-md-2 border-right">
       <div class="row p-1">
-        <input class="width-max comment-height" type="text" [(ngModel)]="line.comment" [disabled]="disableBreakpoints"/>
+        <input class="width-max comment-height" type="text" [(ngModel)]="line.comment" [disabled]="disableBreakpoints" />
       </div>
     </div>
   </div>
