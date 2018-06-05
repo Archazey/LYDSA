@@ -24,7 +24,7 @@ export class MergeSortVisualizerComponent extends DsVisualizerComponent implemen
   // for svg
   circleRadius: number = 5;
   gap: number = 5;
-  elemWidth: number = 30;
+  elemWidth: number = 50;
   animationDuration: number = 50;
 
   constructor() {
