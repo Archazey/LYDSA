@@ -1,0 +1,16 @@
+{
+    "typescript": [
+        "if (st >= dr)",
+        "    return;",
+        "var pivot = arr[dr];",
+        "var i = st - 1;",
+        "for (var j = st; j < dr; j++)", 
+        "    if (arr[j].item <= pivot.item) {",
+        "        i++;",
+        "        swap(arr[i], arr[j]);",
+        "    }",
+        "swap(arr[i + 1], arr[dr]);",
+        "this.quickSort(st, i, arr);",
+        "this.quickSort(i + 2, dr, arr);"
+    ]
+}

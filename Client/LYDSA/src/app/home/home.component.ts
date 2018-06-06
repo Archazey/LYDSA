@@ -85,6 +85,12 @@ export class HomeComponent implements OnInit {
                 url: 'visualize/merge-sort',
                 show: false,
                 children: []
+              },
+              {
+                title: 'Quick sort',
+                url: 'visualize/quick-sort',
+                show: false,
+                children: []
               }
             ]
           }

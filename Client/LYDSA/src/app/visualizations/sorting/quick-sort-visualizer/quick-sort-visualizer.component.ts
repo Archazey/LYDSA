@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { BubbleSortOperation } from '../../../shared/models/bubble-sort/bubble-sort-operation';
-import { BubbleSortRunResult } from '../../../shared/models/bubble-sort/bubble-sort-run-result';
+import { QuickSortOperation } from '../../../shared/models/quick-sort/quick-sort-operation';
+import { QuickSortRunResult } from '../../../shared/models/quick-sort/quick-sort-run-result';
 import { DsVisualizerComponent } from '../../../shared/models/ds-visualizer';
-import { BubbleSortCodeRunner } from '../../../algorithms/sorting/bubble-sort/bubbleSortCodeRunner';
-import { BubbleSortInput } from '../../../shared/models/bubble-sort/bubble-sort-input';
+import { QuickSortCodeRunner } from '../../../algorithms/sorting/quick-sort/quickSortCodeRunner';
+import { QuickSortInput } from '../../../shared/models/quick-sort/quick-sort-input';
 import * as svgPanZoom from 'svg-pan-zoom';
 import * as $ from 'jquery';
 import * as SVG from 'svg.js';
 
 @Component({
-  selector: 'app-bubble-sort-visualizer',
-  templateUrl: './bubble-sort-visualizer.component.html',
-  styleUrls: ['./bubble-sort-visualizer.component.css']
+  selector: 'app-quick-sort-visualizer',
+  templateUrl: './quick-sort-visualizer.component.html',
+  styleUrls: ['./quick-sort-visualizer.component.css']
 })
-export class BubbleSortVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewInit {
-  operationQueue: BubbleSortRunResult[] = [];
-  array: BubbleSortInput[];
+export class QuickSortVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewInit {
+  operationQueue: QuickSortRunResult[] = [];
+  array: QuickSortInput[];
   indexArray: number[];
   panZoomSvg: any;
 
@@ -44,16 +44,16 @@ export class BubbleSortVisualizerComponent extends DsVisualizerComponent impleme
   }
 
   initVisualizer(input: string): void {
-    var runner = new BubbleSortCodeRunner();
+    var runner = new QuickSortCodeRunner();
     this.setArray(runner.parseInput(input));
     setTimeout(() => {
       this.centerSvg();
     }, 50);
   }
 
-  doOperation(operation: BubbleSortRunResult): void {
+  doOperation(operation: QuickSortRunResult): void {
     // put it in a queue because of slow animations
-    if (operation.operation != BubbleSortOperation.None) {
+    if (operation.operation != QuickSortOperation.None) {
       this.operationQueue.push(operation);
     }
   }
@@ -62,7 +62,7 @@ export class BubbleSortVisualizerComponent extends DsVisualizerComponent impleme
     if (this.operationQueue.length) {
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
-      if (operation.operation == BubbleSortOperation.Swap)
+      if (operation.operation == QuickSortOperation.Swap)
         this.swapElements(operation.posA, operation.posB);
       let aux = this.indexArray[operation.posA];
       this.indexArray[operation.posA] = this.indexArray[operation.posB];
@@ -100,7 +100,7 @@ export class BubbleSortVisualizerComponent extends DsVisualizerComponent impleme
     }];
   }
 
-  setArray(array: BubbleSortInput[]): void {
+  setArray(array: QuickSortInput[]): void {
     this.array = array.slice();
     this.indexArray = [];
     for (var index in array)

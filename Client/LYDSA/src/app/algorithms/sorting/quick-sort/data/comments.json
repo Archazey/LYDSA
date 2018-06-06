@@ -1,0 +1,14 @@
+[
+    "if (st >= dr)",
+    "    return;",
+    "var pivot = arr[dr];",
+    "var i = st - 1;",
+    "for (var j = st; j < dr; j++)", 
+    "    if (arr[j].item <= pivot.item) {",
+    "        i++;",
+    "        swap(i, j);",
+    "    }",
+    "swap(i + 1, dr);",
+    "this.quickSort(st, i, arr);",
+    "this.quickSort(i + 2, dr, arr);"
+]

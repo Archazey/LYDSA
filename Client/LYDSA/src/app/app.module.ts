@@ -25,6 +25,8 @@ import { MergeSortComponent } from './algorithms/sorting/merge-sort/merge-sort.c
 import { MergeSortVisualizerComponent } from './visualizations/sorting/merge-sort-visualizer/merge-sort-visualizer.component';
 import { BubbleSortComponent } from './algorithms/sorting/bubble-sort/bubble-sort.component';
 import { BubbleSortVisualizerComponent } from './visualizations/sorting/bubble-sort-visualizer/bubble-sort-visualizer.component';
+import { QuickSortComponent } from './algorithms/sorting/quick-sort/quick-sort.component';
+import { QuickSortVisualizerComponent } from './visualizations/sorting/quick-sort-visualizer/quick-sort-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
   { path: 'visualize/deque', component: DequeComponent },
   { path: 'visualize/merge-sort', component: MergeSortComponent},
   { path: 'visualize/bubble-sort', component: BubbleSortComponent},
+  { path: 'visualize/quick-sort', component: QuickSortComponent},
   { path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -55,7 +58,9 @@ const appRoutes: Routes = [
     MergeSortComponent,
     MergeSortVisualizerComponent,
     BubbleSortComponent,
-    BubbleSortVisualizerComponent
+    BubbleSortVisualizerComponent,
+    QuickSortComponent,
+    QuickSortVisualizerComponent
   ],
   imports: [ 
     AlertModule.forRoot(),
