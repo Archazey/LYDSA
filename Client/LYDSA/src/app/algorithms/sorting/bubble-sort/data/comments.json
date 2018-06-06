@@ -1,0 +1,11 @@
+[
+    "let ok: boolean = true;",
+    "while (ok == true) {",
+    "    ok = false;",
+    "    for (let i = 1; i < input.length; i++)", 
+    "        if (input[i].item < input[i - 1].item) {",
+    "            swap(input[i - 1], input[i]);",
+    "            ok = true;",
+    "        }",
+    "}"
+]

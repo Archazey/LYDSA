@@ -23,6 +23,8 @@ import { DequeComponent } from './data-structures/deque/deque.component';
 import { DequeVisualizerComponent } from './visualizations/deque-visualizer/deque-visualizer.component';
 import { MergeSortComponent } from './algorithms/sorting/merge-sort/merge-sort.component';
 import { MergeSortVisualizerComponent } from './visualizations/sorting/merge-sort-visualizer/merge-sort-visualizer.component';
+import { BubbleSortComponent } from './algorithms/sorting/bubble-sort/bubble-sort.component';
+import { BubbleSortVisualizerComponent } from './visualizations/sorting/bubble-sort-visualizer/bubble-sort-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,6 +32,7 @@ const appRoutes: Routes = [
   { path: 'visualize/queue', component: QueueComponent },
   { path: 'visualize/deque', component: DequeComponent },
   { path: 'visualize/merge-sort', component: MergeSortComponent},
+  { path: 'visualize/bubble-sort', component: BubbleSortComponent},
   { path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -50,7 +53,9 @@ const appRoutes: Routes = [
     DequeComponent,
     DequeVisualizerComponent,
     MergeSortComponent,
-    MergeSortVisualizerComponent
+    MergeSortVisualizerComponent,
+    BubbleSortComponent,
+    BubbleSortVisualizerComponent
   ],
   imports: [ 
     AlertModule.forRoot(),
