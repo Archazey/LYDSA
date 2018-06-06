@@ -8,6 +8,10 @@ import * as svgPanZoom from 'svg-pan-zoom';
 import * as $ from 'jquery';
 import * as SVG from 'svg.js';
 
+// operations
+import { Swap } from '../../../shared/models/bubble-sort/operations/swap';
+import { MoveArrow } from '../../../shared/models/bubble-sort/operations/moveArrow';
+
 @Component({
   selector: 'app-bubble-sort-visualizer',
   templateUrl: './bubble-sort-visualizer.component.html',
@@ -18,12 +22,13 @@ export class BubbleSortVisualizerComponent extends DsVisualizerComponent impleme
   array: BubbleSortInput[];
   indexArray: number[];
   panZoomSvg: any;
+  arrowPos: number = 0;
 
   // for svg
   circleRadius: number = 5;
   gap: number = 5;
   elemWidth: number = 50;
-  animationDuration: number = 50;
+  animationDuration: number = 200;
 
   constructor() {
     super();
@@ -62,11 +67,18 @@ export class BubbleSortVisualizerComponent extends DsVisualizerComponent impleme
     if (this.operationQueue.length) {
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
-      if (operation.operation == BubbleSortOperation.Swap)
-        this.swapElements(operation.posA, operation.posB);
-      let aux = this.indexArray[operation.posA];
-      this.indexArray[operation.posA] = this.indexArray[operation.posB];
-      this.indexArray[operation.posB] = aux;
+      if (operation.operation == BubbleSortOperation.Swap) {
+        var posA = (operation as Swap).posA, posB = (operation as Swap).posB;
+        this.swapElements(posA, posB);
+        let aux = this.indexArray[posA];
+        this.indexArray[posA] = this.indexArray[posB];
+        this.indexArray[posB] = aux;
+      }
+
+      if (operation.operation == BubbleSortOperation.MoveArrow) {
+        var pos = (operation as MoveArrow).pos;
+        this.moveArrow(pos);
+      }
     }
   }
 
@@ -78,26 +90,32 @@ export class BubbleSortVisualizerComponent extends DsVisualizerComponent impleme
     this.moveGroup(groupIndexB, groupPosA);
   }
 
-  moveGroup(groupIndex: number, newPos: any[]) {
-    var group = SVG.select(`g#G${groupIndex} > *`);
-    group.each((index) => {
-      var groupChild = group.get(index);
-      groupChild.animate(this.animationDuration, '>').attr({
-        x: newPos[index].x,
-        y: newPos[index].y
-      });
+  moveArrow(pos: number) {
+    // decolorize
+    var group = $(`#G${this.arrowPos}`);
+    group.css('background-color', '');
+
+    this.arrowPos = this.indexArray[pos];
+
+    // colorize
+    var group = $(`#G${this.arrowPos}`);
+    group.css('background-color', 'red');
+  }
+
+  moveGroup(groupIndex: number, newPos: any) {
+    var group = SVG.select(`#G${groupIndex}`) as any;
+    group.animate(this.animationDuration, '>').attr({
+      x: newPos.x,
+      y: newPos.y
     });
   }
 
   getGroupPos(groupIndex: number) {
-    var rect = $(`g#G${groupIndex} > rect`), text = $(`g#G${groupIndex} > text`);
-    return [{
-      x: rect.attr('x'),
-      y: rect.attr('y')
-    }, {
-      x: text.attr('x'),
-      y: text.attr('y')
-    }];
+    var group = $(`#G${groupIndex}`);
+    return {
+      x: group.attr('x'),
+      y: group.attr('y')
+    };
   }
 
   setArray(array: BubbleSortInput[]): void {

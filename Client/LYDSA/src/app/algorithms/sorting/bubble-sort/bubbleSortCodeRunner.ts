@@ -4,6 +4,10 @@ import { EditorInput } from "../../../shared/models/editor-input";
 import { BubbleSortOperation } from "../../../shared/models/bubble-sort/bubble-sort-operation";
 import { DsCodeRunner } from '../../../shared/models/ds-code-runner';
 
+// operations
+import { Swap } from '../../../shared/models/bubble-sort/operations/swap';
+import { MoveArrow } from '../../../shared/models/bubble-sort/operations/moveArrow';
+
 // codes
 import * as codes from './data/codes.json';
 import * as comments from './data/comments.json';
@@ -27,10 +31,12 @@ export class BubbleSortCodeRunner extends DsCodeRunner {
             this.logLine(new BubbleSortRunResult(2, BubbleSortOperation.None));
             ok = false;
             this.logLine(new BubbleSortRunResult(3, BubbleSortOperation.None));
+            this.logLine(new MoveArrow(-1, BubbleSortOperation.MoveArrow, 0));
             for (let i = 1; i < input.length; i++) {
+                this.logLine(new MoveArrow(-1, BubbleSortOperation.MoveArrow, i));
                 this.logLine(new BubbleSortRunResult(4, BubbleSortOperation.None));
                 if (input[i].item < input[i - 1].item) {
-                    this.logLine(new BubbleSortRunResult(5, BubbleSortOperation.Swap, i - 1, i));
+                    this.logLine(new Swap(5, BubbleSortOperation.Swap, i - 1, i));
                     let aux = input[i];
                     input[i] = input[i - 1];
                     input[i - 1] = aux;
@@ -40,8 +46,10 @@ export class BubbleSortCodeRunner extends DsCodeRunner {
                 }
                 this.logLine(new BubbleSortRunResult(3, BubbleSortOperation.None));
             }
+            this.logLine(new MoveArrow(-1, BubbleSortOperation.MoveArrow, -1));
             this.logLine(new BubbleSortRunResult(8, BubbleSortOperation.None));
-        } 
+        }
+        this.logLine(new MoveArrow(-1, BubbleSortOperation.MoveArrow, -1));
     }
 
     parseInput(input: string): BubbleSortInput[] {

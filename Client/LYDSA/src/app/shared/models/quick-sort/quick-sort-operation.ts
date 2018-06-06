@@ -1,4 +1,6 @@
 export enum QuickSortOperation {
     None,
-    Swap
+    Swap,
+    ColorForPivot,
+    DecolorInterval
 }

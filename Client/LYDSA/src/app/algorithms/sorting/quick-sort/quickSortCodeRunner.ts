@@ -4,6 +4,11 @@ import { EditorInput } from "../../../shared/models/editor-input";
 import { QuickSortOperation } from "../../../shared/models/quick-sort/quick-sort-operation";
 import { DsCodeRunner } from '../../../shared/models/ds-code-runner';
 
+// operations
+import { Swap } from '../../../shared/models/quick-sort/operations/swap';
+import { ColorForPivot } from '../../../shared/models/quick-sort/operations/colorForPivot';
+import { DecolorInterval } from '../../../shared/models/quick-sort/operations/decolorInterval';
+
 // codes
 import * as codes from './data/codes.json';
 import * as comments from './data/comments.json';
@@ -27,6 +32,7 @@ export class QuickSortCodeRunner extends DsCodeRunner {
         }
         this.logLine(new QuickSortRunResult(2, QuickSortOperation.None));
         var pivot = arr[dr];
+        this.logLine(new ColorForPivot(-1, QuickSortOperation.ColorForPivot, pivot.item, st, dr))
         this.logLine(new QuickSortRunResult(3, QuickSortOperation.None));
         var i = st - 1;
         this.logLine(new QuickSortRunResult(4, QuickSortOperation.None));
@@ -35,7 +41,7 @@ export class QuickSortCodeRunner extends DsCodeRunner {
             if (arr[j].item <= pivot.item) {
                 this.logLine(new QuickSortRunResult(6, QuickSortOperation.None));
                 i++;
-                this.logLine(new QuickSortRunResult(7, QuickSortOperation.Swap, i, j));
+                this.logLine(new Swap(7, QuickSortOperation.Swap, i, j));
                 var aux = arr[i];
                 arr[i] = arr[j];
                 arr[j] = aux;
@@ -43,10 +49,11 @@ export class QuickSortCodeRunner extends DsCodeRunner {
             }
             this.logLine(new QuickSortRunResult(4, QuickSortOperation.None));
         }
-        this.logLine(new QuickSortRunResult(9, QuickSortOperation.Swap, i + 1, dr));
+        this.logLine(new Swap(9, QuickSortOperation.Swap, i + 1, dr));
         var aux = arr[i + 1];
         arr[i + 1] = arr[dr];
         arr[dr] = aux;
+        this.logLine(new DecolorInterval(-1, QuickSortOperation.DecolorInterval, st, dr));
         this.logLine(new QuickSortRunResult(10, QuickSortOperation.None));
         this.quickSort(st, i, arr);
         this.logLine(new QuickSortRunResult(11, QuickSortOperation.None));

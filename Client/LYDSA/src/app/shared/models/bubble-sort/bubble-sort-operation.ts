@@ -1,4 +1,5 @@
 export enum BubbleSortOperation {
     None,
-    Swap
+    Swap,
+    MoveArrow
 }

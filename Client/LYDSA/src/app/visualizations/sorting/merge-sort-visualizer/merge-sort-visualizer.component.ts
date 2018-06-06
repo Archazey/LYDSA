@@ -7,6 +7,13 @@ import { MergeSortInput } from '../../../shared/models/merge-sort/merge-sort-inp
 import * as svgPanZoom from 'svg-pan-zoom';
 import * as $ from 'jquery'; 
 import * as SVG from 'svg.js';
+import * as randomcolor from 'randomcolor';
+
+// operations
+import { MoveFromArrToAux } from '../../../shared/models/merge-sort/operations/moveFromArrToAux';
+import { MoveFromAuxToArr } from '../../../shared/models/merge-sort/operations/moveFromAuxToArr';
+import { ColorInterval } from '../../../shared/models/merge-sort/operations/colorInterval';
+import { DecolorInterval } from '../../../shared/models/merge-sort/operations/decolorInterval';
 
 @Component({
   selector: 'app-merge-sort-visualizer',
@@ -25,7 +32,7 @@ export class MergeSortVisualizerComponent extends DsVisualizerComponent implemen
   circleRadius: number = 5;
   gap: number = 5;
   elemWidth: number = 50;
-  animationDuration: number = 50;
+  animationDuration: number = 100;
 
   constructor() {
     super();
@@ -65,15 +72,27 @@ export class MergeSortVisualizerComponent extends DsVisualizerComponent implemen
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
       if (operation.operation == MergeSortOperation.MoveFromArrayToAux) {
-        var x = operation.moveFromPos, y = operation.moveToPos;
+        var newOperation = operation as MoveFromArrToAux;
+        var x = newOperation.moveFrom, y = newOperation.moveTo;
         this.moveElement(this.indexArray[x], y, 50);
         this.indexAuxArray[y] = this.indexArray[x];
       }
 
       if (operation.operation == MergeSortOperation.MoveFromAuxToArray) {
-        var x = operation.moveFromPos, y = operation.moveToPos;
+        var newOperation = operation as MoveFromAuxToArr;
+        var x = newOperation.moveFrom, y = newOperation.moveTo;
         this.moveElement(this.indexAuxArray[x], y, -50);
         this.indexArray[y] = this.indexAuxArray[x];
+      }
+
+      if (operation.operation == MergeSortOperation.ColorInterval) {
+        var st = (operation as ColorInterval).st, dr = (operation as ColorInterval).dr;
+        this.colorInterval(st, dr);
+      }
+
+      if (operation.operation == MergeSortOperation.DecolorInterval) {
+        var st = (operation as DecolorInterval).st, dr = (operation as DecolorInterval).dr;
+        this.decolorInterval(st, dr);
       }
     }
   }
@@ -83,16 +102,27 @@ export class MergeSortVisualizerComponent extends DsVisualizerComponent implemen
   }
 
   moveElement(groupIndex: number, pos: number, changeInHeight: number) {
-    var rect = $(`g#G${groupIndex} > rect`);
-    var text = $(`g#G${groupIndex} > text`);
-    rect.css('y', parseInt(rect.css('y')) + changeInHeight);  
-    rect.css('x', this.calculateX(pos));
-    rect.css('transition', `${this.animationDuration}ms`)
-    var svgText = SVG.select(`g#G${groupIndex} > text`) as any;
+    var group = $(`#G${groupIndex}`);
+    var svgText = SVG.select(`#G${groupIndex}`) as any;
     svgText.animate(this.animationDuration, '>').attr({ 
       x: this.calculateX(pos),
-      y: parseInt(text.attr('y')) + changeInHeight
+      y: parseInt(group.attr('y')) + changeInHeight
     });
+  }
+
+  colorInterval(st: number, dr: number) {
+    var color = randomcolor();
+    for (var i = st; i <= dr; i++) {
+      var group = $(`#G${this.indexArray[i]}`);
+      group.css('background-color', color);
+    }
+  }
+
+  decolorInterval(st: number, dr: number) {
+    for (var i = st; i <= dr; i++) {
+      var group = $(`#G${this.indexArray[i]}`);
+      group.css('background-color', '');
+    }
   }
 
   setArray(array: MergeSortInput[]): void {

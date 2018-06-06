@@ -1,5 +1,7 @@
 export enum MergeSortOperation {
     None,
     MoveFromArrayToAux,
-    MoveFromAuxToArray
+    MoveFromAuxToArray,
+    ColorInterval,
+    DecolorInterval
 }

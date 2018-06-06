@@ -7,6 +7,12 @@ import { QuickSortInput } from '../../../shared/models/quick-sort/quick-sort-inp
 import * as svgPanZoom from 'svg-pan-zoom';
 import * as $ from 'jquery';
 import * as SVG from 'svg.js';
+import * as randomcolor from 'randomcolor';
+
+// operations
+import { Swap } from '../../../shared/models/quick-sort/operations/swap';
+import { ColorForPivot } from '../../../shared/models/quick-sort/operations/colorForPivot';
+import { DecolorInterval } from '../../../shared/models/quick-sort/operations/decolorInterval';
 
 @Component({
   selector: 'app-quick-sort-visualizer',
@@ -23,7 +29,7 @@ export class QuickSortVisualizerComponent extends DsVisualizerComponent implemen
   circleRadius: number = 5;
   gap: number = 5;
   elemWidth: number = 50;
-  animationDuration: number = 50;
+  animationDuration: number = 100;
 
   constructor() {
     super();
@@ -62,11 +68,40 @@ export class QuickSortVisualizerComponent extends DsVisualizerComponent implemen
     if (this.operationQueue.length) {
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
-      if (operation.operation == QuickSortOperation.Swap)
-        this.swapElements(operation.posA, operation.posB);
-      let aux = this.indexArray[operation.posA];
-      this.indexArray[operation.posA] = this.indexArray[operation.posB];
-      this.indexArray[operation.posB] = aux;
+      if (operation.operation == QuickSortOperation.Swap) {
+        var posA = (operation as Swap).posA, posB = (operation as Swap).posB;
+        this.swapElements(posA, posB);
+        let aux = this.indexArray[posA];
+        this.indexArray[posA] = this.indexArray[posB];
+        this.indexArray[posB] = aux;
+      }
+
+      if (operation.operation == QuickSortOperation.ColorForPivot) {
+        this.colorForPivot(operation as ColorForPivot);
+      }
+
+      if (operation.operation == QuickSortOperation.DecolorInterval) {
+        this.decolorInterval(operation as DecolorInterval);
+      }
+    }
+  }
+
+  colorForPivot(operation: ColorForPivot) {
+    var smallerColor = randomcolor();
+    var biggerColor = randomcolor();
+    for (var i = operation.st; i <= operation.dr; i++) {
+      var group = $(`#G${this.indexArray[i]}`);
+      if (this.array[this.indexArray[i]].item <= operation.pivot)
+        group.css('background-color', smallerColor);
+      else
+        group.css('background-color', biggerColor);
+    }
+  }
+
+  decolorInterval(operation: DecolorInterval) {
+    for (var i = operation.st; i <= operation.dr; i++) {
+      var group = $(`#G${this.indexArray[i]}`);
+      group.css('background-color', '');
     }
   }
 
@@ -78,26 +113,20 @@ export class QuickSortVisualizerComponent extends DsVisualizerComponent implemen
     this.moveGroup(groupIndexB, groupPosA);
   }
 
-  moveGroup(groupIndex: number, newPos: any[]) {
-    var group = SVG.select(`g#G${groupIndex} > *`);
-    group.each((index) => {
-      var groupChild = group.get(index);
-      groupChild.animate(this.animationDuration, '>').attr({
-        x: newPos[index].x,
-        y: newPos[index].y
-      });
+  moveGroup(groupIndex: number, newPos: any) {
+    var group = SVG.select(`#G${groupIndex}`) as any;
+    group.animate(this.animationDuration, '>').attr({
+      x: newPos.x,
+      y: newPos.y
     });
   }
 
   getGroupPos(groupIndex: number) {
-    var rect = $(`g#G${groupIndex} > rect`), text = $(`g#G${groupIndex} > text`);
-    return [{
-      x: rect.attr('x'),
-      y: rect.attr('y')
-    }, {
-      x: text.attr('x'),
-      y: text.attr('y')
-    }];
+    var group = $(`foreignObject#G${groupIndex}`);
+    return {
+      x: group.attr('x'),
+      y: group.attr('y')
+    };
   }
 
   setArray(array: QuickSortInput[]): void {

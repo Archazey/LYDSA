@@ -2,11 +2,14 @@
   <button class="btn btn-default position-absolute absolute-top-right mt-2 mr-2" (click)="clearVisualizer()">Clear Visualizer</button>
   <svg id="sortContainer" class="width-max" height="700px" style="border: 1px solid rgb(222, 226, 230);">
     <circle cx="0" cy="0" [attr.r]="circleRadius"></circle>
-    <g *ngFor="let item of array; let i=index;" id="G{{ i }}">
-      <rect [attr.x]="circleRadius + gap + i * gap + i * elemWidth" [attr.y]="-15" [attr.width]="elemWidth" height="30" rx="4" ry="4" fill-opacity="0" stroke="black"
-        stroke-opacity="0.5" />
-      <text [attr.x]="circleRadius + gap + i * gap + i * elemWidth" [attr.y]="5" fill="black">{{ item.item }}</text>
-    </g>
+    <foreignObject [attr.x]="circleRadius + gap + i * gap + i * elemWidth" [attr.y]="-15" [attr.width]="elemWidth" height="30" *ngFor="let item of array; let i=index;"
+      id="G{{ i }}">
+      <svg>
+        <rect [attr.x]="0" [attr.y]="0" [attr.width]="elemWidth" height="30" rx="4"
+          ry="4" fill-opacity="0" stroke="black" stroke-opacity="0.5" />
+        <text [attr.x]="0" [attr.y]="15" fill="black">{{ item.item }}</text>
+      </svg>
+    </foreignObject>
     <circle [attr.cx]="array.length * elemWidth + array.length * gap + gap + 2 * circleRadius" cy="0" [attr.r]="circleRadius"></circle>
   </svg>
 </div>

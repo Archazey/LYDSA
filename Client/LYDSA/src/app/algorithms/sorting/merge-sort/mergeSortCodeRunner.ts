@@ -4,6 +4,12 @@ import { EditorInput } from "../../../shared/models/editor-input";
 import { MergeSortOperation } from "../../../shared/models/merge-sort/merge-sort-operation";
 import { DsCodeRunner } from '../../../shared/models/ds-code-runner';
 
+// operations
+import { MoveFromArrToAux } from '../../../shared/models/merge-sort/operations/moveFromArrToAux';
+import { MoveFromAuxToArr } from '../../../shared/models/merge-sort/operations/moveFromAuxToArr';
+import { ColorInterval } from '../../../shared/models/merge-sort/operations/colorInterval';
+import { DecolorInterval } from '../../../shared/models/merge-sort/operations/decolorInterval';
+
 // codes
 import * as codes from './data/codes.json';
 import * as comments from './data/comments.json';
@@ -34,6 +40,9 @@ export class MergeSortCodeRunner extends DsCodeRunner {
         this.logLine(new MergeSortRunResult(5, MergeSortOperation.None));
         this.mergeSort(mij + 1, dr, arr);
 
+        this.logLine(new ColorInterval(-1, MergeSortOperation.ColorInterval, st, mij));
+        this.logLine(new ColorInterval(-1, MergeSortOperation.ColorInterval, mij + 1, dr));
+
         this.logLine(new MergeSortRunResult(6, MergeSortOperation.None));
         var i = st, j = mij + 1;
         this.logLine(new MergeSortRunResult(7, MergeSortOperation.None));
@@ -42,14 +51,14 @@ export class MergeSortCodeRunner extends DsCodeRunner {
         while (i <= mij && j <= dr) {
             this.logLine(new MergeSortRunResult(9, MergeSortOperation.None));
             if (arr[i].item <= arr[j].item) {
-                this.logLine(new MergeSortRunResult(10, MergeSortOperation.MoveFromArrayToAux, i, st + aux.length));
+                this.logLine(new MoveFromArrToAux(10, MergeSortOperation.MoveFromArrayToAux, i, st + aux.length));
                 aux.push(arr[i]);
                 this.logLine(new MergeSortRunResult(11, MergeSortOperation.None));
                 i++;
                 this.logLine(new MergeSortRunResult(12, MergeSortOperation.None));
             }
             else {
-                this.logLine(new MergeSortRunResult(13, MergeSortOperation.MoveFromArrayToAux, j, st + aux.length));
+                this.logLine(new MoveFromArrToAux(13, MergeSortOperation.MoveFromArrayToAux, j, st + aux.length));
                 aux.push(arr[j]);
                 this.logLine(new MergeSortRunResult(14, MergeSortOperation.None));
                 j++;
@@ -59,7 +68,7 @@ export class MergeSortCodeRunner extends DsCodeRunner {
         }
         this.logLine(new MergeSortRunResult(17, MergeSortOperation.None));
         while (i <= mij) {
-            this.logLine(new MergeSortRunResult(18, MergeSortOperation.MoveFromArrayToAux, i, st + aux.length));
+            this.logLine(new MoveFromArrToAux(18, MergeSortOperation.MoveFromArrayToAux, i, st + aux.length));
             aux.push(arr[i]);
             this.logLine(new MergeSortRunResult(19, MergeSortOperation.None));
             i++;
@@ -67,7 +76,7 @@ export class MergeSortCodeRunner extends DsCodeRunner {
         }
         this.logLine(new MergeSortRunResult(21, MergeSortOperation.None));
         while (j <= dr) {
-            this.logLine(new MergeSortRunResult(22, MergeSortOperation.MoveFromArrayToAux, j, st + aux.length));
+            this.logLine(new MoveFromArrToAux(22, MergeSortOperation.MoveFromArrayToAux, j, st + aux.length));
             aux.push(arr[j]);
             this.logLine(new MergeSortRunResult(23, MergeSortOperation.None));
             j++;
@@ -75,9 +84,11 @@ export class MergeSortCodeRunner extends DsCodeRunner {
         }
         this.logLine(new MergeSortRunResult(25, MergeSortOperation.None));
         for (var index in aux) {
-            this.logLine(new MergeSortRunResult(26, MergeSortOperation.MoveFromAuxToArray, st + parseInt(index), st + parseInt(index)));
+            this.logLine(new MoveFromAuxToArr(26, MergeSortOperation.MoveFromAuxToArray, st + parseInt(index), st + parseInt(index)));
             arr[st + parseInt(index)] = aux[index];
         }
+
+        this.logLine(new DecolorInterval(-1, MergeSortOperation.DecolorInterval, st, dr));
     }
 
     run(input: MergeSortInput[]) {
