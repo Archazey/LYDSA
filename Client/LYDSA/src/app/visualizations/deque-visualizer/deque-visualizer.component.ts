@@ -2,7 +2,7 @@ import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { DequeOperation } from '../../shared/models/deque/deque-operation';
 import { DequeRunResult } from '../../shared/models/deque/deque-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
-import { DequeVisualizerData } from '../../shared/models/deque/deque-visualizer-data'; 
+import { DequeVisualizerData } from '../../shared/models/deque/deque-visualizer-data';
 import * as uniqid from 'uniqid';
 
 @Component({
@@ -10,26 +10,41 @@ import * as uniqid from 'uniqid';
   templateUrl: './deque-visualizer.component.html',
   styleUrls: ['./deque-visualizer.component.css']
 })
-export class DequeVisualizerComponent extends DsVisualizerComponent{
+export class DequeVisualizerComponent extends DsVisualizerComponent {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   dequeArray: DequeVisualizerData[] = [];
+  operationQueue: DequeRunResult[] = [];
+  animationDuration: number = 500;
 
-  constructor() { 
+  constructor() {
     super();
+    setInterval(() => this.runOperation(), this.animationDuration + 10);
   }
- 
+
   doOperation(operation: DequeRunResult): void {
-    if (operation.operation == DequeOperation.PushFront)
-      this.pushElementToFront(operation.data);
+    // put it in a queue because of slow animations
+    if (operation.operation != DequeOperation.None) {
+      this.operationQueue.push(operation);
+    }
+  }
 
-    if (operation.operation == DequeOperation.PushBack)
-      this.pushElementToBack(operation.data);
+  runOperation(): void {
+    if (this.operationQueue.length) {
+      var operation = this.operationQueue[0];
+      this.operationQueue.splice(0, 1);
+      
+      if (operation.operation == DequeOperation.PushFront)
+        this.pushElementToFront(operation.data);
 
-    if (operation.operation == DequeOperation.PopFront)
-      this.popElementFromFront();
+      if (operation.operation == DequeOperation.PushBack)
+        this.pushElementToBack(operation.data);
 
-    if (operation.operation == DequeOperation.PopBack)
-      this.popElementFromBack();
+      if (operation.operation == DequeOperation.PopFront)
+        this.popElementFromFront();
+
+      if (operation.operation == DequeOperation.PopBack)
+        this.popElementFromBack();
+    }
   }
 
   clearVisualizer(): void {
@@ -37,46 +52,24 @@ export class DequeVisualizerComponent extends DsVisualizerComponent{
   }
 
   pushElementToFront(data: number) {
-    var hashValue = uniqid();
-    this.dequeArray.splice(0, 0, new DequeVisualizerData('fadeIn', hashValue, data));
-    setTimeout(() => {
-      var elem = this.dequeArray.find((item) => item.hashValue == hashValue);
-      if (elem && elem.animation == 'fadeIn')
-        elem.animation = '';
-    }, 1000);
+    this.dequeArray.splice(0, 0, new DequeVisualizerData('fadeIn', data));
   }
 
   pushElementToBack(data: number) {
-    var hashValue = uniqid();
-    this.dequeArray.push(new DequeVisualizerData('fadeIn', hashValue, data));
-    setTimeout(() => {
-      var elem = this.dequeArray.find((item) => item.hashValue == hashValue);
-      if (elem && elem.animation == 'fadeIn')
-        elem.animation = '';
-    }, 1000);
+    this.dequeArray.push(new DequeVisualizerData('fadeIn', data));
   }
 
   popElementFromFront() {
-    var hashValue = this.dequeArray[0].hashValue;
     this.dequeArray[0].animation = 'fadeOut';
     setTimeout(() => {  
-      var pos;
-      for (var i in this.dequeArray)
-        if (this.dequeArray[i].hashValue == hashValue)
-          pos = i;
-      this.dequeArray.splice(pos, 1);
-    }, 1000);
+      this.dequeArray.splice(0, 1);
+    }, this.animationDuration);
   }
 
   popElementFromBack() {
-    var hashValue = this.dequeArray[this.dequeArray.length - 1].hashValue;
     this.dequeArray[this.dequeArray.length - 1].animation = 'fadeOut';
     setTimeout(() => {  
-      var pos;
-      for (var i in this.dequeArray)
-        if (this.dequeArray[i].hashValue == hashValue)
-          pos = i;
-      this.dequeArray.splice(pos, 1);
-    }, 1000);
+      this.dequeArray.splice(this.dequeArray.length - 1, 1);
+    }, this.animationDuration);
   }
 }

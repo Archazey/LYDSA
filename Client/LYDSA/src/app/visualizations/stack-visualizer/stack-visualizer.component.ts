@@ -3,7 +3,6 @@ import { StackOperation } from '../../shared/models/stack/stack-operation';
 import { StackRunResult } from '../../shared/models/stack/stack-run-result';
 import { DsVisualizerComponent } from '../../shared/models/ds-visualizer';
 import { StackVisualizerData } from '../../shared/models/stack/stack-visualizer-data';
-import * as uniqid from 'uniqid';
 
 @Component({
   selector: 'app-stack-visualizer',
@@ -13,25 +12,38 @@ import * as uniqid from 'uniqid';
 export class StackVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewChecked{
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   stackArray: StackVisualizerData[] = [];
+  operationQueue: StackRunResult[] = [];
+  animationDuration: number = 500;
 
   constructor() { 
     super();
+    setInterval(() => this.runOperation(), this.animationDuration + 10);
   }
 
   ngOnInit() {
     this.scrollToBottom();
   }
- 
-  doOperation(operation: StackRunResult): void {
-    if (operation.operation == StackOperation.Push)
-      this.pushElement(operation.data);
 
-    if (operation.operation == StackOperation.Pop)
-      this.popElement();
+  doOperation(operation: StackRunResult): void {
+    // put it in a queue because of slow animations
+    if (operation.operation != StackOperation.None) {
+      this.operationQueue.push(operation);
+    }
   }
 
   clearVisualizer(): void {
     this.stackArray = [];
+  }
+
+  runOperation(): void {
+    if (this.operationQueue.length) {
+      var operation = this.operationQueue[0];
+      this.operationQueue.splice(0, 1);
+      if (operation.operation == StackOperation.Push)
+        this.pushElement(operation.data);
+      if (operation.operation == StackOperation.Pop)
+        this.popElement();
+    }
   }
 
   ngAfterViewChecked() {
@@ -45,24 +57,13 @@ export class StackVisualizerComponent extends DsVisualizerComponent implements O
   }
 
   pushElement(data: number) {
-    var hashValue = uniqid();
-    this.stackArray.push(new StackVisualizerData('fadeIn', hashValue, data));
-    setTimeout(() => {
-      var elem = this.stackArray.find((item) => item.hashValue == hashValue);
-      if (elem && elem.animation == 'fadeIn')
-        elem.animation = '';
-    }, 1000);
+    this.stackArray.push(new StackVisualizerData('fadeIn', data));
   }
 
   popElement() {
-    var hashValue = this.stackArray[this.stackArray.length - 1].hashValue;
     this.stackArray[this.stackArray.length - 1].animation = 'fadeOut';
     setTimeout(() => {  
-      var pos;
-      for (var i in this.stackArray)
-        if (this.stackArray[i].hashValue == hashValue)
-          pos = i;
-      this.stackArray.splice(pos, 1);
-    }, 1000);
+      this.stackArray.splice(this.stackArray.length - 1, 1);
+    }, this.animationDuration);
   }
 }

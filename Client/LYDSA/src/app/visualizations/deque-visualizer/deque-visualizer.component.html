@@ -2,7 +2,7 @@
   <button class="btn btn-default position-absolute absolute-top-right mt-2 mr-2" (click)="clearVisualizer()">Clear Visualizer</button>
   <div>
     <div class="card card-width-10 custom-card m-1" [ngClass]="{'animate fadeIn':  item.animation=='fadeIn', 'animate fadeOut red-card': item.animation=='fadeOut'}"
-      *ngFor="let item of dequeArray; let i=index;">
+    [ngStyle]="{'animation-duration': animationDuration / 1000 + 's'}" *ngFor="let item of dequeArray; let i=index;">
       <div class="card-header" *ngIf="i == 0">
         <p class="text-center">Front</p>
       </div>

@@ -12,17 +12,30 @@ import * as uniqid from 'uniqid';
 })
 export class QueueVisualizerComponent extends DsVisualizerComponent {
   queueArray: QueueVisualizerData[] = [];
+  operationQueue: QueueRunResult[] = [];
+  animationDuration: number = 500;
 
   constructor() { 
     super();
+    setInterval(() => this.runOperation(), this.animationDuration + 10);
   }
 
   doOperation(operation: QueueRunResult): void {
-    if (operation.operation == QueueOperation.Push)
-      this.pushElement(operation.data);
+    // put it in a queue because of slow animations
+    if (operation.operation != QueueOperation.None) {
+      this.operationQueue.push(operation);
+    }
+  }
 
-    if (operation.operation == QueueOperation.Pop)
-      this.popElement();
+  runOperation(): void {
+    if (this.operationQueue.length) {
+      var operation = this.operationQueue[0];
+      this.operationQueue.splice(0, 1);
+      if (operation.operation == QueueOperation.Push)
+        this.pushElement(operation.data);
+      if (operation.operation == QueueOperation.Pop)
+        this.popElement();
+    }
   }
 
   clearVisualizer(): void {
@@ -30,24 +43,13 @@ export class QueueVisualizerComponent extends DsVisualizerComponent {
   }
 
   pushElement(data: number) {
-    var hashValue = uniqid();
-    this.queueArray.push(new QueueVisualizerData('fadeIn', hashValue, data));
-    setTimeout(() => {
-      var elem = this.queueArray.find((item) => item.hashValue == hashValue);
-      if (elem && elem.animation == 'fadeIn')
-        elem.animation = '';
-    }, 1000);
+    this.queueArray.splice(0, 0, new QueueVisualizerData('fadeIn', data));
   }
 
   popElement() {
-    var hashValue = this.queueArray[0].hashValue;
-    this.queueArray[0].animation = 'fadeOut';
+    this.queueArray[this.queueArray.length - 1].animation = 'fadeOut';
     setTimeout(() => {  
-      var pos;
-      for (var i in this.queueArray)
-        if (this.queueArray[i].hashValue == hashValue)
-          pos = i;
-      this.queueArray.splice(pos, 1);
-    }, 1000);
+      this.queueArray.splice(this.queueArray.length - 1, 1);
+    }, this.animationDuration);
   }
 }

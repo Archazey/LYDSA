@@ -24,10 +24,6 @@ button.absolute-top-right {
     background-color: #ffc100;
 }
 
-div.card {
-  animation-duration: 1.2s;
-}
-
 div.red-card {
     background-color: red;
 }
