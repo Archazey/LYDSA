@@ -27,9 +27,15 @@ import { BubbleSortComponent } from './algorithms/sorting/bubble-sort/bubble-sor
 import { BubbleSortVisualizerComponent } from './visualizations/sorting/bubble-sort-visualizer/bubble-sort-visualizer.component';
 import { QuickSortComponent } from './algorithms/sorting/quick-sort/quick-sort.component';
 import { QuickSortVisualizerComponent } from './visualizations/sorting/quick-sort-visualizer/quick-sort-visualizer.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent},
+  { path: 'profile/:user', component: ProfileComponent },
   { path: 'visualize/stack', component: StackComponent },
   { path: 'visualize/queue', component: QueueComponent },
   { path: 'visualize/deque', component: DequeComponent },
@@ -60,7 +66,10 @@ const appRoutes: Routes = [
     BubbleSortComponent,
     BubbleSortVisualizerComponent,
     QuickSortComponent,
-    QuickSortVisualizerComponent
+    QuickSortVisualizerComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [ 
     AlertModule.forRoot(),

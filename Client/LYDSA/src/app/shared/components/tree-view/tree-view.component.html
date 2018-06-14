@@ -1,6 +1,6 @@
 <ul>
   <li class="with-margin" *ngFor="let item of data; let i=index;">
-    <a href="{{ item.url }}">{{ item.title }}</a>
+    <a [routerLink]="item.url">{{ item.title }}</a>
     <button class="btn btn-light" *ngIf="!item.show" (click)="toggleItem(item)">
       <i class="fa fa-chevron-right"></i>
     </button>
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div *ngIf="item.children.length == 0" class="d-inline-block">
-      (Avg rating {{ avgRating[i] }})
+      (Avg rating <i>{{ avgRating[i] }}</i>)
     </div>
     <app-tree-view *ngIf="item.show" [data]="item.children"></app-tree-view>
   </li>

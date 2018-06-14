@@ -1,15 +1,19 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light lysda-navbar d-flex justify-content-between">
-  <a class="navbar-brand" href="#">LYDSA</a>
+  <a class="navbar-brand" routerLink="/#">LYDSA</a>
 
 
   <div style="display: inline-block;">
     <div style="display: inline-block; margin: 0px 40px 0px 40px;">
-      <span class="text-center">Login</span>
+      <a routerLink="/login" class="no-color">
+        <span class="text-center">Login</span>
+      </a>
     </div>
 
     <div style="display: inline-block; margin: 0px 40px 0px 40px;">
-        <span class="text-center">Sign up</span>
-      </div>
+      <a routerLink="/register" class="no-color">
+        <span class="text-center">Register</span>
+      </a>
+    </div>
   </div>
 </nav>
 
