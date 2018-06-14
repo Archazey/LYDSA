@@ -18,3 +18,10 @@ div.absolute-top-right {
 .scrollable {
     overflow: auto;
 }
+
+textarea.comment {
+    resize: none;
+    padding: 0px;
+    height: 100px;
+    width: 100%;
+}

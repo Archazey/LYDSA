@@ -11,6 +11,9 @@ import { DsInput } from '../../models/ds-input';
 import { DsRunResult } from '../../models/ds-run-result';
 import { DsCodeRunner } from '../../models/ds-code-runner';
 
+// mock data
+import * as comments from './mock_data/comments.json';
+
 @Component({
   selector: 'app-simulator',
   templateUrl: './simulator.component.html',
@@ -39,6 +42,9 @@ export class SimulatorComponent implements OnInit, AfterViewInit{
   selectedLanguage: string;
   programmingLanguages: string[];
 
+  // mock data
+  comments: any[];
+
   constructor() {
     this.programmingLanguages = [
       "Typescript",
@@ -46,6 +52,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit{
       "Python"
     ];
     this.selectedLanguage = "Typescript";
+    this.comments = comments as any;
   }
 
   ngOnInit() {
