@@ -93,6 +93,50 @@ export class HomeComponent implements OnInit {
                 children: []
               }
             ]
+          },
+          {
+            title: 'Path Finding on matrix',
+            url: '/#',
+            show: false,
+            children: [
+              {
+                title: 'Lee algorithm',
+                url: '/visualize/lee',
+                show: false,
+                children: []
+              },
+              {
+                title: 'A* algorithm',
+                url: '/visualize/a-star',
+                show: false,
+                children: []
+              }
+            ]
+          },
+          {
+            title: 'Graphs',
+            url: '/#',
+            show: false,
+            children: [
+              {
+                title: 'Connected components',
+                url: '/visualize/connected-components',
+                show: false,
+                children: []
+              },
+              {
+                title: 'Biconnected components',
+                url: '/visualize/biconnected-components',
+                show: false,
+                children: []
+              },
+              {
+                title: 'Prim algorithm',
+                url: '/visualize/prim',
+                show: false,
+                children: []
+              }
+            ]
           }
         ]
       }
