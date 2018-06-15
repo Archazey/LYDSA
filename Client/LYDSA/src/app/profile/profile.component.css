@@ -1,0 +1,10 @@
+textarea.bio {
+    resize: none;
+    padding: 0px;
+    height: 100px;
+    width: 100%;
+}
+
+.experience {
+    color: #0069d9;
+}
