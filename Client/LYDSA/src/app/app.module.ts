@@ -34,6 +34,8 @@ import { ConnectedComponentsComponent } from './algorithms/graphs/connected-comp
 import { ConnectedComponentsVisualizerComponent } from './visualizations/graphs/connected-components-visualizer/connected-components-visualizer.component';
 import { KruskalComponent } from './algorithms/graphs/kruskal/kruskal.component';
 import { KruskalVisualizerComponent } from './visualizations/graphs/kruskal-visualizer/kruskal-visualizer.component';
+import { BiconnectedComponentsComponent } from './algorithms/graphs/biconnected-components/biconnected-components.component';
+import { BiconnectedComponentsVisualizerComponent } from './visualizations/graphs/biconnected-components-visualizer/biconnected-components-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -47,7 +49,8 @@ const appRoutes: Routes = [
   { path: 'visualize/bubble-sort', component: BubbleSortComponent },
   { path: 'visualize/quick-sort', component: QuickSortComponent },
   { path: 'visualize/connected-components', component: ConnectedComponentsComponent },
-  { path: 'visualize/kruskal', component: KruskalComponent }, 
+  { path: 'visualize/kruskal', component: KruskalComponent },
+  { path: 'visualize/biconnected-components', component: BiconnectedComponentsComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -79,7 +82,9 @@ const appRoutes: Routes = [
     ConnectedComponentsComponent,
     ConnectedComponentsVisualizerComponent,
     KruskalComponent,
-    KruskalVisualizerComponent
+    KruskalVisualizerComponent,
+    BiconnectedComponentsComponent,
+    BiconnectedComponentsVisualizerComponent
   ],
   imports: [
     AlertModule.forRoot(),

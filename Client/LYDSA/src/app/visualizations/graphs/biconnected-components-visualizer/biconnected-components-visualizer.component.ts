@@ -1,28 +1,26 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { KruskalOperation } from '../../../shared/models/kruskal/kruskal-operation';
-import { KruskalRunResult } from '../../../shared/models/kruskal/kruskal-run-result';
+import { BiconnectedComponentsOperation } from '../../../shared/models/biconnected-components/biconnected-components-operation';
+import { BiconnectedComponentsRunResult } from '../../../shared/models/biconnected-components/biconnected-components-run-result';
 import { DsVisualizerComponent } from '../../../shared/models/ds-visualizer';
-import { KruskalCodeRunner } from '../../../algorithms/graphs/kruskal/kruskalCodeRunner';
-import { KruskalInput } from '../../../shared/models/kruskal/kruskal-input';
+import { BiconnectedComponentsCodeRunner } from '../../../algorithms/graphs/biconnected-components/biconnectedComponentsCodeRunner';
+import { BiconnectedComponentsInput } from '../../../shared/models/biconnected-components/biconnected-components-input';
 import * as vis from 'vis';
 
 // operations
-import { ColorNode } from '../../../shared/models/kruskal/operations/colorNode';
-import { ColorEdge} from '../../../shared/models/kruskal/operations/colorEdge';
+import { ColorNode } from '../../../shared/models/biconnected-components/operations/colorNode';
 
 @Component({
-  selector: 'app-kruskal-visualizer',
-  templateUrl: './kruskal-visualizer.component.html',
-  styleUrls: ['./kruskal-visualizer.component.css']
+  selector: 'app-biconnected-components-visualizer',
+  templateUrl: './biconnected-components-visualizer.component.html',
+  styleUrls: ['./biconnected-components-visualizer.component.css']
 })
-export class KruskalVisualizerComponent extends DsVisualizerComponent implements OnInit {
-  operationQueue: KruskalRunResult[] = [];
-  array: KruskalInput[];
+export class BiconnectedComponentsVisualizerComponent extends DsVisualizerComponent implements OnInit {
+  operationQueue: BiconnectedComponentsRunResult[] = [];
+  array: BiconnectedComponentsInput[];
   indexArray: number[];
-  graph: KruskalInput;
+  graph: BiconnectedComponentsInput;
   network: any;
   visNodes: any;
-  visEdges: any;
 
   constructor() {
     super();
@@ -36,14 +34,14 @@ export class KruskalVisualizerComponent extends DsVisualizerComponent implements
   }
 
   initVisualizer(input: string): void {
-    var runner = new KruskalCodeRunner();
+    var runner = new BiconnectedComponentsCodeRunner();
     this.graph = runner.parseInput(input)[0];
     this.initializeGraph();
   }
 
-  doOperation(operation: KruskalRunResult): void {
+  doOperation(operation: BiconnectedComponentsRunResult): void {
     // put it in a queue because of slow animations
-    if (operation.operation != KruskalOperation.None) {
+    if (operation.operation != BiconnectedComponentsOperation.None) {
       this.operationQueue.push(operation);
     }
   }
@@ -52,27 +50,20 @@ export class KruskalVisualizerComponent extends DsVisualizerComponent implements
     if (this.operationQueue.length) {
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
-
-      if (operation.operation == KruskalOperation.ColorNode) {
+      
+      if (operation.operation == BiconnectedComponentsOperation.ColorNode) {
         var newOperation = operation as ColorNode;
         var node = newOperation.index, color = newOperation.color;
         var graphNode = this.visNodes.get(node);
         graphNode.color = {
           border: '#000000',
-          background: color
-        };
+          background: color,
+          highlight: {
+            border: '#2B7CE9',
+            background: '#D2E5FF'
+          }
+        }
         this.visNodes.update(graphNode);
-      }
-
-      if (operation.operation == KruskalOperation.ColorEdge) {
-        var newOperation = operation as ColorEdge;
-        var edge = newOperation.index, color = newOperation.color;
-        var graphEdge = this.visEdges.get(edge);
-        graphEdge.color = {
-          color: color
-        };
-        graphEdge.width = 3;
-        this.visEdges.update(graphEdge);
       }
     }
   }
@@ -86,10 +77,12 @@ export class KruskalVisualizerComponent extends DsVisualizerComponent implements
 
     // create an array with edges
     var graphEdges = [];
-    for (var i = 0; i < this.graph.numberOfEdges; i++)
-      graphEdges.push({ from: this.graph.edges[i].nodeA, to: this.graph.edges[i].nodeB, id: i, label: this.graph.edges[i].cost.toString() });
-
-    this.visEdges = new vis.DataSet(graphEdges);
+    for (var i = 0; i < this.graph.numberOfNodes; i++)
+      for (var j = 0; j < this.graph.edges[i].length; j++)
+          if (i < this.graph.edges[i][j])   
+            graphEdges.push({ from: i, to: this.graph.edges[i][j] });
+    
+    var edges = new vis.DataSet(graphEdges);
 
     // create a network
     var container = document.getElementById('graphContainer');
@@ -97,7 +90,7 @@ export class KruskalVisualizerComponent extends DsVisualizerComponent implements
     // provide the data in the vis format
     var data = {
       nodes: this.visNodes,
-      edges: this.visEdges
+      edges: edges
     };
     var options = {
       nodes: {

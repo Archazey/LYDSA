@@ -5,7 +5,7 @@
         "}",
         "findFather(node, father) {",
         "   if (node != father[node])",
-        "        father[node] = this.findFather(father[node], father);",
+        "        father[node] = findFather(father[node], father);",
         "   return father[node];",
         "}",
         "run(input: KruskalInput[]) {",
@@ -17,10 +17,10 @@
         "        return edgeA.cost - edgeB.cost;",
         "    });",
         "    for (var edge of graph.edges) {",
-        "        var fatherA = this.findFather(edge.nodeA, father);",
-        "        var fatherB = this.findFather(edge.nodeB, father);",
+        "        var fatherA = findFather(edge.nodeA, father);",
+        "        var fatherB = findFather(edge.nodeB, father);",
         "        if (fatherA != fatherB)",
-        "            this.union(fatherA, fatherB, father);",
+        "            union(fatherA, fatherB, father);",
         "    }",
         "}"
     ]
