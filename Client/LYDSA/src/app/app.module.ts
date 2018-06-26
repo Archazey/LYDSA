@@ -30,26 +30,29 @@ import { QuickSortVisualizerComponent } from './visualizations/sorting/quick-sor
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ConnectedComponentsComponent } from './algorithms/graphs/connected-components/connected-components.component';
+import { ConnectedComponentsVisualizerComponent } from './visualizations/graphs/connected-components-visualizer/connected-components-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
+  { path: 'register', component: RegisterComponent },
   { path: 'profile/:user', component: ProfileComponent },
   { path: 'visualize/stack', component: StackComponent },
   { path: 'visualize/queue', component: QueueComponent },
   { path: 'visualize/deque', component: DequeComponent },
-  { path: 'visualize/merge-sort', component: MergeSortComponent},
-  { path: 'visualize/bubble-sort', component: BubbleSortComponent},
-  { path: 'visualize/quick-sort', component: QuickSortComponent},
-  { path: '**', redirectTo: '/home', pathMatch: 'full'}
+  { path: 'visualize/merge-sort', component: MergeSortComponent },
+  { path: 'visualize/bubble-sort', component: BubbleSortComponent },
+  { path: 'visualize/quick-sort', component: QuickSortComponent },
+  { path: 'visualize/connected-components', component: ConnectedComponentsComponent },
+  { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent, 
+    HomeComponent,
     TreeViewComponent,
     StackComponent,
     BreakpointStepPanelComponent,
@@ -69,9 +72,11 @@ const appRoutes: Routes = [
     QuickSortVisualizerComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    ConnectedComponentsComponent,
+    ConnectedComponentsVisualizerComponent
   ],
-  imports: [ 
+  imports: [
     AlertModule.forRoot(),
     TabsModule.forRoot(),
     BrowserModule,
