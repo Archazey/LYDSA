@@ -1,26 +1,28 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ConnectedComponentsOperation } from '../../../shared/models/connected-components/connected-components-operation';
-import { ConnectedComponentsRunResult } from '../../../shared/models/connected-components/connected-components-run-result';
+import { KruskalOperation } from '../../../shared/models/kruskal/kruskal-operation';
+import { KruskalRunResult } from '../../../shared/models/kruskal/kruskal-run-result';
 import { DsVisualizerComponent } from '../../../shared/models/ds-visualizer';
-import { ConnectedComponentsCodeRunner } from '../../../algorithms/graphs/connected-components/connectedComponentsCodeRunner';
-import { ConnectedComponentsInput } from '../../../shared/models/connected-components/connected-components-input';
+import { KruskalCodeRunner } from '../../../algorithms/graphs/kruskal/kruskalCodeRunner';
+import { KruskalInput } from '../../../shared/models/kruskal/kruskal-input';
 import * as vis from 'vis';
 
 // operations
-import { ColorNode } from '../../../shared/models/connected-components/operations/colorNode';
+import { ColorNode } from '../../../shared/models/kruskal/operations/colorNode';
+import { ColorEdge} from '../../../shared/models/kruskal/operations/colorEdge';
 
 @Component({
-  selector: 'app-connected-components-visualizer',
-  templateUrl: './connected-components-visualizer.component.html',
-  styleUrls: ['./connected-components-visualizer.component.css']
+  selector: 'app-kruskal-visualizer',
+  templateUrl: './kruskal-visualizer.component.html',
+  styleUrls: ['./kruskal-visualizer.component.css']
 })
-export class ConnectedComponentsVisualizerComponent extends DsVisualizerComponent implements OnInit {
-  operationQueue: ConnectedComponentsRunResult[] = [];
-  array: ConnectedComponentsInput[];
+export class KruskalVisualizerComponent extends DsVisualizerComponent implements OnInit {
+  operationQueue: KruskalRunResult[] = [];
+  array: KruskalInput[];
   indexArray: number[];
-  graph: ConnectedComponentsInput;
+  graph: KruskalInput;
   network: any;
   visNodes: any;
+  visEdges: any;
 
   constructor() {
     super();
@@ -34,14 +36,14 @@ export class ConnectedComponentsVisualizerComponent extends DsVisualizerComponen
   }
 
   initVisualizer(input: string): void {
-    var runner = new ConnectedComponentsCodeRunner();
+    var runner = new KruskalCodeRunner();
     this.graph = runner.parseInput(input)[0];
     this.initializeGraph();
   }
 
-  doOperation(operation: ConnectedComponentsRunResult): void {
+  doOperation(operation: KruskalRunResult): void {
     // put it in a queue because of slow animations
-    if (operation.operation != ConnectedComponentsOperation.None) {
+    if (operation.operation != KruskalOperation.None) {
       this.operationQueue.push(operation);
     }
   }
@@ -51,19 +53,27 @@ export class ConnectedComponentsVisualizerComponent extends DsVisualizerComponen
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
 
-      if (operation.operation == ConnectedComponentsOperation.ColorNode) {
+      if (operation.operation == KruskalOperation.ColorNode) {
         var newOperation = operation as ColorNode;
         var node = newOperation.index, color = newOperation.color;
         var graphNode = this.visNodes.get(node);
         graphNode.color = {
           border: '#000000',
-          background: color,
-          highlight: {
-            border: '#2B7CE9',
-            background: '#D2E5FF'
-          }
-        }
+          background: color
+        };
         this.visNodes.update(graphNode);
+      }
+
+      if (operation.operation == KruskalOperation.ColorEdge) {
+        var newOperation = operation as ColorEdge;
+        var edge = newOperation.index, color = newOperation.color;
+        var graphEdge = this.visEdges.get(edge);
+        console.log(newOperation);
+        graphEdge.color = {
+          color: color
+        };
+        graphEdge.width = 3;
+        this.visEdges.update(graphEdge);
       }
     }
   }
@@ -77,12 +87,10 @@ export class ConnectedComponentsVisualizerComponent extends DsVisualizerComponen
 
     // create an array with edges
     var graphEdges = [];
-    for (var i = 0; i < this.graph.numberOfNodes; i++)
-      for (var j = 0; j < this.graph.edges[i].length; j++)
-          if (i < this.graph.edges[i][j])   
-            graphEdges.push({ from: i, to: this.graph.edges[i][j] });
-    
-    var edges = new vis.DataSet(graphEdges);
+    for (var i = 0; i < this.graph.numberOfEdges; i++)
+      graphEdges.push({ from: this.graph.edges[i].nodeA, to: this.graph.edges[i].nodeB, id: i, label: this.graph.edges[i].cost.toString() });
+
+    this.visEdges = new vis.DataSet(graphEdges);
 
     // create a network
     var container = document.getElementById('graphContainer');
@@ -90,7 +98,7 @@ export class ConnectedComponentsVisualizerComponent extends DsVisualizerComponen
     // provide the data in the vis format
     var data = {
       nodes: this.visNodes,
-      edges: edges
+      edges: this.visEdges
     };
     var options = {
       nodes: {

@@ -32,6 +32,8 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConnectedComponentsComponent } from './algorithms/graphs/connected-components/connected-components.component';
 import { ConnectedComponentsVisualizerComponent } from './visualizations/graphs/connected-components-visualizer/connected-components-visualizer.component';
+import { KruskalComponent } from './algorithms/graphs/kruskal/kruskal.component';
+import { KruskalVisualizerComponent } from './visualizations/graphs/kruskal-visualizer/kruskal-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -45,6 +47,7 @@ const appRoutes: Routes = [
   { path: 'visualize/bubble-sort', component: BubbleSortComponent },
   { path: 'visualize/quick-sort', component: QuickSortComponent },
   { path: 'visualize/connected-components', component: ConnectedComponentsComponent },
+  { path: 'visualize/kruskal', component: KruskalComponent }, 
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -74,7 +77,9 @@ const appRoutes: Routes = [
     RegisterComponent,
     ProfileComponent,
     ConnectedComponentsComponent,
-    ConnectedComponentsVisualizerComponent
+    ConnectedComponentsVisualizerComponent,
+    KruskalComponent,
+    KruskalVisualizerComponent
   ],
   imports: [
     AlertModule.forRoot(),

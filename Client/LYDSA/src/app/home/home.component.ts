@@ -131,8 +131,8 @@ export class HomeComponent implements OnInit {
                 children: []
               },
               {
-                title: 'Prim algorithm',
-                url: '/visualize/prim',
+                title: 'Kruskal algorithm',
+                url: '/visualize/kruskal',
                 show: false,
                 children: []
               }
