@@ -38,6 +38,8 @@ import { BiconnectedComponentsComponent } from './algorithms/graphs/biconnected-
 import { BiconnectedComponentsVisualizerComponent } from './visualizations/graphs/biconnected-components-visualizer/biconnected-components-visualizer.component';
 import { LeeComponent } from './algorithms/matrix/lee/lee.component';
 import { LeeVisualizerComponent } from './visualizations/matrix/lee-visualizer/lee-visualizer.component';
+import { AStarComponent } from './algorithms/matrix/a-star/a-star.component';
+import { AStarVisualizerComponent } from './visualizations/matrix/a-star-visualizer/a-star-visualizer.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -54,6 +56,7 @@ const appRoutes: Routes = [
   { path: 'visualize/kruskal', component: KruskalComponent },
   { path: 'visualize/biconnected-components', component: BiconnectedComponentsComponent },
   { path: 'visualize/lee', component: LeeComponent },
+  { path: 'visualize/a-star', component: AStarComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -89,7 +92,9 @@ const appRoutes: Routes = [
     BiconnectedComponentsComponent,
     BiconnectedComponentsVisualizerComponent,
     LeeComponent,
-    LeeVisualizerComponent
+    LeeVisualizerComponent,
+    AStarComponent,
+    AStarVisualizerComponent
   ],
   imports: [
     AlertModule.forRoot(),

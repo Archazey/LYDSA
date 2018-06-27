@@ -1,26 +1,26 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { LeeOperation } from '../../../shared/models/lee/lee-operation';
-import { LeeRunResult } from '../../../shared/models/lee/lee-run-result';
+import { AStarOperation } from '../../../shared/models/a-star/a-star-operation';
+import { AStarRunResult } from '../../../shared/models/a-star/a-star-run-result';
 import { DsVisualizerComponent } from '../../../shared/models/ds-visualizer';
-import { LeeCodeRunner } from '../../../algorithms/matrix/lee/leeCodeRunner';
-import { LeeInput } from '../../../shared/models/lee/lee-input';
+import { AStarCodeRunner } from '../../../algorithms/matrix/a-star/aStarCodeRunner';
+import { AStarInput } from '../../../shared/models/a-star/a-star-input';
 import * as svgPanZoom from 'svg-pan-zoom';
 import * as $ from 'jquery';
 import * as SVG from 'svg.js';
 
 // operations
-import { ColorCell } from '../../../shared/models/lee/operations/colorCell';
+import { ColorCell } from '../../../shared/models/a-star/operations/colorCell';
 
 @Component({
-  selector: 'app-lee-visualizer',
-  templateUrl: './lee-visualizer.component.html',
-  styleUrls: ['./lee-visualizer.component.css']
+  selector: 'app-a-star-visualizer',
+  templateUrl: './a-star-visualizer.component.html',
+  styleUrls: ['./a-star-visualizer.component.css']
 })
-export class LeeVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewInit {
+export class AStarVisualizerComponent extends DsVisualizerComponent implements OnInit, AfterViewInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  operationQueue: LeeRunResult[] = [];
+  operationQueue: AStarRunResult[] = [];
   animationDuration: number = 100;
-  matrix: LeeInput;
+  matrix: AStarInput;
   coloredMatrix: number[][];
   panZoomSvg: any;
   startCell: string = '#33cc33';
@@ -41,22 +41,22 @@ export class LeeVisualizerComponent extends DsVisualizerComponent implements OnI
   }
 
   ngAfterViewInit(): void {
-    this.panZoomSvg = svgPanZoom('#leeContainer', {
+    this.panZoomSvg = svgPanZoom('#aStarContainer', {
       zoomScaleSensitivity: 0.3,
       minZoom: 0.001,
       center: false
     });
   }
 
-  doOperation(operation: LeeRunResult): void {
+  doOperation(operation: AStarRunResult): void {
     // put it in a queue because of slow animations
-    if (operation.operation != LeeOperation.None) {
+    if (operation.operation != AStarOperation.None) {
       this.operationQueue.push(operation);
     }
   }
 
   initVisualizer(input: string): void {
-    var runner = new LeeCodeRunner();
+    var runner = new AStarCodeRunner();
     this.matrix = runner.parseInput(input)[0];
     this.initializeMatrix();
     setTimeout(() => {
@@ -69,7 +69,7 @@ export class LeeVisualizerComponent extends DsVisualizerComponent implements OnI
       var operation = this.operationQueue[0];
       this.operationQueue.splice(0, 1);
 
-      if (operation.operation == LeeOperation.ColorCell) {
+      if (operation.operation == AStarOperation.ColorCell) {
         var newOperation = operation as ColorCell;
         var cell = newOperation.coordinates, color = newOperation.color;
         var group = $(`#G${cell.x}-${cell.y}`);

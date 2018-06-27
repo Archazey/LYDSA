@@ -96,10 +96,9 @@ export class LeeCodeRunner extends DsCodeRunner {
             }
         }
         var cell = matrix.stop;
-        this.logLine(new ColorCell(-1, LeeOperation.ColorCell, cell, this.pathCell));
-        while (cell != matrix.start) {
-            cell = prev[cell.x][cell.y];
+        while (cell.x != matrix.start.x || cell.y != matrix.start.y) {
             this.logLine(new ColorCell(-1, LeeOperation.ColorCell, cell, this.pathCell));
+            cell = prev[cell.x][cell.y];
         }
         this.logLine(new ColorCell(-1, LeeOperation.ColorCell, matrix.start, this.pathCell));
     }
