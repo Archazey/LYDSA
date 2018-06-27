@@ -1,0 +1,12 @@
+button.absolute-top-right {
+    top: 0px;
+    right: 0px;
+}
+
+.width-max {
+    width: 100%;
+}
+
+.height-max {
+    height: auto;
+}

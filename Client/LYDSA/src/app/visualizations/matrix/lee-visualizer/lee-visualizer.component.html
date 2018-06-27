@@ -1,0 +1,14 @@
+<div class="height-width-max">
+  <svg id="leeContainer" class="width-max" height="700px" style="border: 1px solid rgb(222, 226, 230);">
+    <rect [attr.x]="0" [attr.y]="0" [attr.width]="cellWidth" [attr.height]="cellHeight" fill-opacity="0" stroke="black" stroke-opacity="0.5"></rect>
+    <g *ngFor="let row of coloredMatrix; let i=index;">
+      <foreignObject [attr.x]="(i - 1) * cellHeight" [attr.y]="(j - 1) * cellWidth" [attr.width]="cellWidth" [attr.height]="cellHeight"
+        *ngFor="let cell of row; let j=index;" id="G{{ i }}-{{ j }}">
+        <svg>
+          <rect [attr.x]="0" [attr.y]="0" [attr.width]="cellWidth" [attr.height]="cellHeight" fill-opacity="0" stroke="black" stroke-opacity="0.5"
+          />
+        </svg>
+      </foreignObject>
+    </g>
+  </svg>
+</div>

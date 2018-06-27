@@ -7,7 +7,7 @@
         "        if (visited[neighbour] == false) {",
         "            level[neighbour] = level[node] + 1;",
         "            stack.push(neighbour);",
-        "            this.dfs(neighbour, edges, visited, level, minlevel, stack);",
+        "            dfs(neighbour, edges, visited, level, minlevel, stack);",
         "            minlevel[node] = Math.min(minlevel[node], minlevel[neighbour]);",
         "            if (minlevel[neighbour] >= level[node]) {",
         "                while (stack[stack.length - 1] != neighbour)",
@@ -28,7 +28,7 @@
         "    minlevel.fill(0, 0, graph.numberOfNodes);",
         "    for (var i = 0; i < graph.numberOfNodes; i++) ",
         "        if (visited[i] == false)" ,
-        "            this.dfs(i, graph.edges, visited, level, minlevel, stack);",
+        "            dfs(i, graph.edges, visited, level, minlevel, stack);",
         "}"
     ]
 }
