@@ -2,7 +2,7 @@
   <a class="navbar-brand" routerLink="/#">LYDSA</a>
 
 
-  <div style="display: inline-block;">
+  <div style="display: inline-block;" *ngIf="userIsLoggedIn() == false">
     <div style="display: inline-block; margin: 0px 40px 0px 40px;">
       <a routerLink="/login" class="no-color">
         <span class="text-center">Login</span>
@@ -15,6 +15,20 @@
       </a>
     </div>
   </div>
+
+  <div style="display: inline-block;" *ngIf="userIsLoggedIn() == true">
+      <div style="display: inline-block; margin: 0px 40px 0px 40px;">
+        <a routerLink="/profile/{{ username }}" class="no-color">
+          <span class="text-center">Profile</span>
+        </a>
+      </div>
+  
+      <div style="display: inline-block; margin: 0px 40px 0px 40px;">
+        <a routerLink="/home" class="no-color" (click)="logoutUser()">
+          <span class="text-center">Logout</span>
+        </a>
+      </div>
+    </div>
 </nav>
 
 <div style="height: 56px;"></div>
