@@ -43,4 +43,10 @@ export class TreeViewComponent implements OnInit {
   public toggleItem(item: TreeElement): void {
     item.show = !item.show;
   }
+
+  userIsLoggedIn(): boolean {
+    if (window.sessionStorage['lydsa-username']) 
+      return true;
+    return false;
+  }
 }

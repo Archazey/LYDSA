@@ -157,4 +157,10 @@ export class SimulatorComponent implements OnInit, AfterViewInit{
   changeLanguage() {
     this.setEditorContent();
   }
+
+  userIsLoggedIn(): boolean {
+    if (window.sessionStorage['lydsa-username']) 
+      return true;
+    return false;
+  }
 }

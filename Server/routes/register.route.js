@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db_connection');
 const pool = db.getPool();
 
-// login the user
+// register the user
 router.post('/register', (req, res) => {
     let username = req.body.username, password = req.body.password;
     let email = req.body.email, gender = req.body.gender, role = req.body.role;

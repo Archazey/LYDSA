@@ -25,5 +25,7 @@ var routes = require('./routes/login.route');
 app.use('/', routes);
 routes = require('./routes/register.route');
 app.use('/', routes)
+routes = require('./routes/profile.route');
+app.use('/', routes)
 
 

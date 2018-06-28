@@ -20,7 +20,7 @@
         <tab heading="Input">
           <textarea class="max border" [(ngModel)]="inputData"></textarea>
         </tab>
-        <tab heading="Comments">
+        <tab heading="Comments" *ngIf="userIsLoggedIn() == true">
           <div *ngFor="let comment of comments" class="card m-3">
             <div class="card-body p-3">
               <h5 class="card-title">{{ comment.author }}</h5>
@@ -39,7 +39,7 @@
             <textarea class="comment border" placeholder="Type your comment here..."></textarea>
           </div>
         </tab>
-        <tab heading="Questions">
+        <tab heading="Questions" *ngIf="userIsLoggedIn() == true">
           <div class="card m-2">
             <div class="card-body">
               <p>We have an empty stack and these operations, in order:</p>
